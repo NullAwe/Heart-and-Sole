@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetEnd="0dp"
+        android:background="@color/colorPrimary"
+        android:id="@+id/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="Sign Up"
+                android:textSize="30sp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:id="@+id/sign_up_text"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sign_up_text"
+                android:layout_margin="20dp"
+                android:padding="10dp"
+                android:hint="Username"
+                android:background="@color/gray"
+                android:id="@+id/su_username" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/su_username"
+                android:layout_margin="20dp"
+                android:padding="10dp"
+                android:hint="Password"
+                android:background="@color/gray"
+                android:id="@+id/su_password" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/su_password"
+                android:layout_margin="20dp"
+                android:padding="10dp"
+                android:text="Submit"
+                android:onClick="addAccount"
+                android:id="@+id/submit_sign_up" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/su_password"
+                android:layout_toEndOf="@id/submit_sign_up"
+                android:layout_margin="20dp"
+                android:padding="10dp"
+                android:text=""
+                android:textColor="@color/colorPrimaryDark"
+                android:id="@+id/sign_up_result" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/sign_up_result"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@id/sign_up_result"
+                android:text="Sign In"
+                android:textSize="30sp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:id="@+id/sign_in_text"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sign_in_text"
+                android:layout_margin="20dp"
+                android:padding="10dp"
+                android:hint="Username"
+                android:background="@color/gray"
+                android:id="@+id/si_username" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/si_username"
+                android:layout_margin="20dp"
+                android:padding="10dp"
+                android:hint="Password"
+                android:background="@color/gray"
+                android:id="@+id/si_password" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/si_password"
+                android:layout_margin="20dp"
+                android:padding="10dp"
+                android:text="Submit"
+                android:onClick="checkAccount"
+                android:id="@+id/submit_sign_in" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/si_password"
+                android:layout_toEndOf="@id/submit_sign_in"
+                android:layout_margin="20dp"
+                android:padding="10dp"
+                android:text=""
+                android:textColor="@color/colorPrimaryDark"
+                android:id="@+id/sign_in_result" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

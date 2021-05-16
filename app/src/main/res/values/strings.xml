@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Heart And Sole</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="google_maps_key"
+        templateMergeStrategy="preserve"
+        translatable="false">AIzaSyDpZ4sNYkPadNxpNsL-jEsa4jC86QwLEBM</string>
+</resources>
