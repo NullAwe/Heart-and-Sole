@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:padding="20dp"
         android:text="RECOMMENDED FOR YOU"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         android:gravity="center"

@@ -65,7 +65,7 @@ public class SolelyForYouEditFragment extends Fragment implements OnMapReadyCall
         if (mapFrag != null) mapFrag.getMapAsync(this);
         locProv = LocationServices.getFusedLocationProviderClient(context);
         Slider timeSlider = this.view.findViewById(R.id.time_slider);
-        timeSlider.setValue(3.0f); // test
+        timeSlider.setValue(2.0f);
         timeSlider.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
             @Override
             public void onStartTrackingTouch(@NonNull Slider slider) {}

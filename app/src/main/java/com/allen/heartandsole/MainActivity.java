@@ -12,7 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SharedPreferencesAccountAPI accountAPI;
+    private AccountAPI accountAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,35 +26,45 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setCustomView(R.layout.toolbar);
 
-        accountAPI = new SharedPreferencesAccountAPI(this);
+        accountAPI = new FirebaseAccountAPI(this, succeeded -> {
+            String resultText;
+            if (succeeded) resultText = "Successful!";
+            else resultText = "An account with that username already exists.";
+            ((TextView) findViewById(R.id.sign_up_result)).setText(resultText);
+        }, (status, username) -> {
+            String resultText = "";
+            switch (status) {
+                case NO_USER:
+                    resultText = "Account doesn't exist.";
+                    break;
+                case WRONG_PASSWORD:
+                    resultText = "Incorrect password.";
+                    break;
+                case SUCCESS:
+                    resultText = "Successful!";
+                    Intent goToHomepage = new Intent(this, MeActivity.class);
+                    goToHomepage.putExtra("username", username);
+                    startActivity(goToHomepage);
+            }
+            ((TextView) findViewById(R.id.sign_in_result)).setText(resultText);
+        });
     }
 
     public void addAccount(View view) {
         EditText username = findViewById(R.id.su_username),
                 password = findViewById(R.id.su_password);
         String unText = username.getText().toString(), pwText = password.getText().toString();
-        String resultText;
-        if (unText.length() < 5) resultText = "Username too short.";
-        else if (accountAPI.addAccount(new Account(unText, pwText))) resultText = "Successful!";
-        else resultText = "An account with this username already exists.";
-        ((TextView) findViewById(R.id.sign_up_result)).setText(resultText);
+        if (unText.length() < 5)
+            ((TextView) findViewById(R.id.sign_up_result))
+                    .setText("Username must be at least five characters.");
+        else accountAPI.addAccount(new Account(unText, pwText));
     }
-
 
     public void checkAccount(View view) {
         EditText username = findViewById(R.id.si_username),
                 password = findViewById(R.id.si_password);
         String unText = username.getText().toString(), pwText = password.getText().toString();
-        String resultText;
-        Account acc = accountAPI.getAccount(unText);
-        if (acc.getUsername().length() == 0) resultText = "Account doesn't exist.";
-        else if (acc.getPassword().equals(pwText)) resultText = "Successfully logged in!";
-        else resultText = "Wrong password.";
-        ((TextView) findViewById(R.id.sign_in_result)).setText(resultText);
-        if (resultText.equals("Successfully logged in!")) {
-            Intent goToHomepage = new Intent(this, MeActivity.class);
-            goToHomepage.putExtra("username", acc.getUsername());
-            startActivity(goToHomepage);
-        }
+        accountAPI.auth(new Account(unText, pwText));
+
     }
 }

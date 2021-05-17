@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "324703168622",
+    "project_id": "heart-and-sole-606cd",
+    "storage_bucket": "heart-and-sole-606cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324703168622:android:07615eea6f7b85fe1a5e7f",
+        "android_client_info": {
+          "package_name": "com.allen.heartandsole"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324703168622-189tmmc26ad5gkqd8grmg5ph2uigro2q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt-DGdyrnLXHEbPRkQD4tPUVrrcjPmlc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324703168622-189tmmc26ad5gkqd8grmg5ph2uigro2q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

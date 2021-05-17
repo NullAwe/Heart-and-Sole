@@ -3,6 +3,10 @@ package com.allen.heartandsole;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -22,7 +26,31 @@ public class MeActivity extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setCustomView(R.layout.toolbar);
-        ((TextView) findViewById(R.id.me_heading)).setText(getIntent().getStringExtra("username"));
+        String welcome = "Welcome, " + getIntent().getStringExtra("username");
+        ((TextView) findViewById(R.id.me_heading)).setText(welcome);
+
+        LinearLayout navButtons = findViewById(R.id.nav_buttons);
+        for (int i = 0; i < navButtons.getChildCount(); i++) {
+            View next = navButtons.getChildAt(i);
+            if (!(next instanceof LinearLayout)) continue;
+            LinearLayout ll = (LinearLayout) next;
+            for (int j = 0; j < ll.getChildCount(); j++) {
+                next = ll.getChildAt(j);
+                if (!(next instanceof RelativeLayout)) continue;
+                RelativeLayout rl = (RelativeLayout) next;
+                for (int k = 0; k < rl.getChildCount(); k++) {
+                    next = rl.getChildAt(k);
+                    if (!(next instanceof Button)) continue;
+                    Button button = (Button) next;
+                    button.post(() -> {
+                        ViewGroup.LayoutParams layoutParams = button.getLayoutParams();
+                        layoutParams.width = button.getHeight();
+                        button.setLayoutParams(layoutParams);
+                        button.postInvalidate();
+                    });
+                }
+            }
+        }
     }
 
     public void solelyForYou(View view) {

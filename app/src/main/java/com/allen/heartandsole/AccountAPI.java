@@ -1,6 +1,6 @@
 package com.allen.heartandsole;
 
 public interface AccountAPI {
-    boolean addAccount(Account acc);
-    Account getAccount(String name);
+    void addAccount(Account acc);
+    void auth(Account acc);
 }
