@@ -49,7 +49,7 @@ public class SolelyForYouMainFragment extends Fragment implements OnMapReadyCall
     }
 
     @Override
-    public void onMapReady(GoogleMap gMap) {
+    public void onMapReady(@NonNull GoogleMap gMap) {
         this.map = gMap;
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED && ActivityCompat

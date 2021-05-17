@@ -28,7 +28,10 @@ public class MeActivity extends AppCompatActivity {
         actionBar.setCustomView(R.layout.toolbar);
         String welcome = "Welcome, " + getIntent().getStringExtra("username");
         ((TextView) findViewById(R.id.me_heading)).setText(welcome);
+        makeNavButtonsCircular();
+    }
 
+    private void makeNavButtonsCircular() {
         LinearLayout navButtons = findViewById(R.id.nav_buttons);
         for (int i = 0; i < navButtons.getChildCount(); i++) {
             View next = navButtons.getChildAt(i);

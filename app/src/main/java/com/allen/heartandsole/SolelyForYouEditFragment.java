@@ -44,7 +44,6 @@ public class SolelyForYouEditFragment extends Fragment implements OnMapReadyCall
 
     private Activity activity;
     private Context context;
-    private View view;
 
     private GoogleMap map;
     private FusedLocationProviderClient locProv;
@@ -59,12 +58,11 @@ public class SolelyForYouEditFragment extends Fragment implements OnMapReadyCall
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         activity = requireActivity();
         context = requireContext();
-        this.view = requireView();
         SupportMapFragment mapFrag = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.rec_map);
         if (mapFrag != null) mapFrag.getMapAsync(this);
         locProv = LocationServices.getFusedLocationProviderClient(context);
-        Slider timeSlider = this.view.findViewById(R.id.time_slider);
+        Slider timeSlider = view.findViewById(R.id.time_slider);
         timeSlider.setValue(2.0f);
         timeSlider.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
             @Override
@@ -99,7 +97,8 @@ public class SolelyForYouEditFragment extends Fragment implements OnMapReadyCall
     }
 
     private static String getTime(float value) {
-        int mins = timeMap.get(Math.round(value));
+        Integer mins = timeMap.get(Math.round(value));
+        if (mins == null) return "";
         if (mins < 60) return mins + " min";
         else if (mins % 60 == 0) return mins / 60 + " hr";
         return mins / 60 + " hr " + mins % 60 + " min";

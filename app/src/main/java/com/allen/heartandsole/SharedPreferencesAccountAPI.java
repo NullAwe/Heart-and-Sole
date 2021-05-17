@@ -3,11 +3,12 @@ package com.allen.heartandsole;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+@SuppressWarnings("unused")
 public class SharedPreferencesAccountAPI implements AccountAPI {
 
     private final Context context;
-    private SignUpResponseHandler signUpResponseHandler;
-    private SignInResponseHandler signInResponseHandler;
+    private final SignUpResponseHandler signUpResponseHandler;
+    private final SignInResponseHandler signInResponseHandler;
 
     public SharedPreferencesAccountAPI(Context context, SignUpResponseHandler signUpResponseHandler,
                                        SignInResponseHandler signInResponseHandler) {

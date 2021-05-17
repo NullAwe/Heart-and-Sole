@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setCustomView(R.layout.toolbar);
 
-        accountAPI = new FirebaseAccountAPI(this, succeeded -> {
+        accountAPI = new FirebaseAccountAPI(succeeded -> {
             String resultText;
             if (succeeded) resultText = "Successful!";
             else resultText = "An account with that username already exists.";
@@ -53,10 +53,10 @@ public class MainActivity extends AppCompatActivity {
     public void addAccount(View view) {
         EditText username = findViewById(R.id.su_username),
                 password = findViewById(R.id.su_password);
-        String unText = username.getText().toString(), pwText = password.getText().toString();
-        if (unText.length() < 5)
-            ((TextView) findViewById(R.id.sign_up_result))
-                    .setText("Username must be at least five characters.");
+        String unText = username.getText().toString(), pwText = password.getText().toString(),
+                lengthMessage = "Username or password does not fit length requirements.";
+        if (unText.length() < 5 || pwText.length() < 5 || unText.length() > 10)
+            ((TextView) findViewById(R.id.sign_up_result)).setText(lengthMessage);
         else accountAPI.addAccount(new Account(unText, pwText));
     }
 
@@ -65,6 +65,5 @@ public class MainActivity extends AppCompatActivity {
                 password = findViewById(R.id.si_password);
         String unText = username.getText().toString(), pwText = password.getText().toString();
         accountAPI.auth(new Account(unText, pwText));
-
     }
 }
