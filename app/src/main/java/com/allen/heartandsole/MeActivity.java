@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,14 +44,23 @@ public class MeActivity extends AppCompatActivity {
                 RelativeLayout rl = (RelativeLayout) next;
                 for (int k = 0; k < rl.getChildCount(); k++) {
                     next = rl.getChildAt(k);
-                    if (!(next instanceof Button)) continue;
-                    Button button = (Button) next;
-                    button.post(() -> {
-                        ViewGroup.LayoutParams layoutParams = button.getLayoutParams();
-                        layoutParams.width = button.getHeight();
-                        button.setLayoutParams(layoutParams);
-                        button.postInvalidate();
-                    });
+                    if (next instanceof Button) {
+                        Button button = (Button) next;
+                        button.post(() -> {
+                            ViewGroup.LayoutParams layoutParams = button.getLayoutParams();
+                            layoutParams.width = button.getHeight();
+                            button.setLayoutParams(layoutParams);
+                            button.postInvalidate();
+                        });
+                    } else if (next instanceof ImageButton) {
+                        ImageButton button = (ImageButton) next;
+                        button.post(() -> {
+                            ViewGroup.LayoutParams layoutParams = button.getLayoutParams();
+                            layoutParams.width = button.getHeight();
+                            button.setLayoutParams(layoutParams);
+                            button.postInvalidate();
+                        });
+                    }
                 }
             }
         }

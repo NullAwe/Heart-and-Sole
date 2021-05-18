@@ -22,7 +22,17 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.RoundCap;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class SolelyForYouMainFragment extends Fragment implements OnMapReadyCallback {
 
@@ -63,7 +73,64 @@ public class SolelyForYouMainFragment extends Fragment implements OnMapReadyCall
             if (loc == null) return;
             LatLng curPos = new LatLng(loc.getLatitude(), loc.getLongitude());
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(curPos, 15.0f));
+//            String http = "https://maps.googleapis.com/maps/api/directions/json?origin=" +
+//                    curPos.latitude + "," + curPos.longitude + "&destination=" +
+//                    (curPos.latitude + Math.random()) + "," + (curPos.longitude + Math.random()) +
+//                    "&key=" + getString(R.string.google_maps_key) + "&mode=walking";
+//            HttpURLConnection con;
+//            try {
+//                con = (HttpURLConnection) new URL(http).openConnection();
+//                con.setRequestMethod("GET");
+//                Scanner sc = new Scanner(con.getInputStream());
+//                StringBuilder sb = new StringBuilder();
+//                while (sc.hasNextLine()) sb.append(sc.nextLine()).append("\n");
+//                sc.close();
+//                con.disconnect();
+//                List<LatLng> points = decodePoints(sb.toString());
+//                for (int i = 1; i < points.size(); i++) {
+//                    Polyline polyline = map.addPolyline(new PolylineOptions().add(
+//                            points.get(i - 1),
+//                            points.get(i)));
+//                    stylePolyline(polyline);
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         });
         locProv.requestLocationUpdates(lr, lc, Looper.myLooper());
+    }
+
+    public static List<LatLng> decodePoints(String encoded){
+        int index = 0, lat = 0, lng = 0;
+        List<LatLng> points = new ArrayList<>();
+        while (index < encoded.length()) {
+            int shift = 0, result = 0;
+            while (true) {
+                int b = encoded.charAt(index++) - '?';
+                result |= ((b & 31) << shift);
+                shift += 5;
+                if (b < 32) break;
+            }
+            lat += ((result & 1) != 0 ? ~(result >> 1) : result >> 1);
+            shift = 0;
+            result = 0;
+            while (true) {
+                int b = encoded.charAt(index++) - '?';
+                result |= ((b & 31) << shift);
+                shift += 5;
+                if (b < 32) break;
+            }
+            lng += ((result & 1) != 0 ? ~(result >> 1) : result >> 1);
+            points.add(new LatLng(lat * 10,lng * 10));
+        }
+        return points;
+    }
+
+    private static void stylePolyline(Polyline polyline) {
+        polyline.setColor(0xff000000);
+        polyline.setWidth(12);
+        polyline.setJointType(JointType.ROUND);
+        polyline.setStartCap(new RoundCap());
+        polyline.setEndCap(new RoundCap());
     }
 }

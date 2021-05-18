@@ -47,6 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:padding="10dp"
+                android:clipToPadding="false"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="match_parent"
@@ -58,12 +59,17 @@
                     android:gravity="center"
                     android:id="@+id/holy_walkamolie_heading"/>
 
-                <Button
+                <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:layout_below="@id/holy_walkamolie_heading"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_holy_walkamolie"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
                     android:background="@drawable/circular_button"
+                    android:elevation="1dp"
                     android:layout_weight="1" />
             </RelativeLayout>
 
@@ -71,6 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:padding="10dp"
+                android:clipToPadding="false"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="match_parent"
@@ -95,6 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:padding="10dp"
+                android:clipToPadding="false"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="match_parent"
@@ -126,6 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:padding="10dp"
+                android:clipToPadding="false"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="match_parent"
@@ -137,12 +146,13 @@
                     android:gravity="center"
                     android:id="@+id/solely_for_you_heading"/>
 
-                <Button
+                <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:layout_below="@id/solely_for_you_heading"
                     android:background="@drawable/circular_button"
+                    android:elevation="1dp"
                     android:onClick="solelyForYou"
                     android:layout_weight="1" />
             </RelativeLayout>
@@ -151,6 +161,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:padding="10dp"
+                android:clipToPadding="false"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="match_parent"
@@ -162,12 +173,16 @@
                     android:gravity="center"
                     android:id="@+id/sole_mate_heading"/>
 
-                <Button
+                <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:layout_below="@id/sole_mate_heading"
+                    android:padding="15dp"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
                     android:background="@drawable/circular_button"
+                    android:elevation="1dp"
                     android:layout_weight="1" />
             </RelativeLayout>
 
@@ -175,6 +190,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:padding="10dp"
+                android:clipToPadding="false"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="match_parent"

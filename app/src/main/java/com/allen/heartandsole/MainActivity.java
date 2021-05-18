@@ -1,6 +1,7 @@
 package com.allen.heartandsole;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +14,8 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivity extends AppCompatActivity {
 
     private AccountAPI accountAPI;
+
+    private MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,16 @@ public class MainActivity extends AppCompatActivity {
             }
             ((TextView) findViewById(R.id.sign_in_result)).setText(resultText);
         });
+        player = MediaPlayer.create(this, R.raw.seedless_strawberries);
+        player.start();
+        player.setLooping(true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        player.stop();
+        player.release();
     }
 
     public void addAccount(View view) {
