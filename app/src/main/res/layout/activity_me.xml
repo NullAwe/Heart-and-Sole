@@ -120,6 +120,7 @@
                     android:layout_centerInParent="true"
                     android:layout_below="@id/red_hot_chili_steppers_heading"
                     android:background="@drawable/circular_button"
+                    android:onClick="goToRedHotChiliSteppers"
                     android:layout_weight="1" />
             </RelativeLayout>
         </LinearLayout>
@@ -153,7 +154,7 @@
                     android:layout_below="@id/solely_for_you_heading"
                     android:background="@drawable/circular_button"
                     android:elevation="1dp"
-                    android:onClick="solelyForYou"
+                    android:onClick="goToSolelyForYou"
                     android:layout_weight="1" />
             </RelativeLayout>
 

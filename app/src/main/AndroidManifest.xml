@@ -40,7 +40,11 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".SolelyForYouActivity"
+            android:name=".RedHotChiliSteppersActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".solely_for_you.SolelyForYouActivity"
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait" />
     </application>

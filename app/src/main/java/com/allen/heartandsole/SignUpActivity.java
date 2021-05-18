@@ -11,6 +11,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.allen.heartandsole.account.Account;
+import com.allen.heartandsole.account.AccountAPI;
+import com.allen.heartandsole.account.FirebaseAccountAPI;
+
 public class SignUpActivity extends AppCompatActivity {
 
     // Displays when the EditText fields do not fit within length requirements:

@@ -1,7 +1,6 @@
 package com.allen.heartandsole;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 
@@ -11,7 +10,6 @@ import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,17 +23,6 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setCustomView(R.layout.toolbar);
-
-        player = MediaPlayer.create(this, R.raw.seedless_strawberries);
-        player.start();
-        player.setLooping(true);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        player.stop();
-        player.release();
     }
 
     public void goToSignUp(View view) {

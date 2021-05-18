@@ -14,6 +14,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.allen.heartandsole.solely_for_you.SolelyForYouActivity;
+
 public class MeActivity extends AppCompatActivity {
 
     @Override
@@ -66,7 +68,11 @@ public class MeActivity extends AppCompatActivity {
         }
     }
 
-    public void solelyForYou(View view) {
+    public void goToSolelyForYou(View view) {
         startActivity(new Intent(this, SolelyForYouActivity.class));
+    }
+
+    public void goToRedHotChiliSteppers(View view) {
+        startActivity(new Intent(this, RedHotChiliSteppersActivity.class));
     }
 }
