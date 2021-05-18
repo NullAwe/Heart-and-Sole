@@ -12,8 +12,6 @@
         app:contentInsetStart="0dp"
         app:contentInsetEnd="0dp"
         android:background="@color/colorPrimary"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:id="@+id/toolbar" />
 
     <ScrollView
@@ -22,116 +20,76 @@
         android:layout_below="@id/toolbar">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:paddingBottom="30dp">
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/heart_and_sole_icon"
+                android:id="@+id/big_icon" />
+
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:text="Sign Up"
-                android:textSize="25sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/big_icon"
+                android:text="@string/app_name"
+                android:textSize="35sp"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:id="@+id/sign_up_text"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/sign_up_text"
-                android:layout_margin="20dp"
-                android:padding="10dp"
-                android:hint="Username"
-                android:background="@color/gray"
-                android:id="@+id/su_username" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/su_username"
-                android:layout_margin="20dp"
-                android:padding="10dp"
-                android:hint="Password"
-                android:background="@color/gray"
-                android:id="@+id/su_password" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/su_password"
-                android:layout_margin="20dp"
-                android:padding="10dp"
-                android:text="Submit"
-                android:onClick="addAccount"
-                android:id="@+id/submit_sign_up" />
+                android:id="@+id/title" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/su_password"
-                android:layout_toEndOf="@id/submit_sign_up"
-                android:layout_margin="20dp"
-                android:padding="10dp"
-                android:text=""
-                android:textColor="@color/colorPrimaryDark"
-                android:id="@+id/sign_up_result" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@id/sign_up_result"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_below="@id/sign_up_result"
-                android:text="Sign In"
-                android:textSize="25sp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/title"
+                android:layout_margin="10dp"
+                android:text="@string/app_description"
+                android:textSize="20sp"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:id="@+id/sign_in_text"/>
+                android:id="@+id/app_description" />
 
-            <EditText
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/sign_in_text"
-                android:layout_margin="20dp"
-                android:padding="10dp"
-                android:hint="Username"
-                android:background="@color/gray"
-                android:id="@+id/si_username" />
+                android:layout_height="110dp"
+                android:layout_below="@id/app_description"
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:clipChildren="false"
+                android:id="@+id/sign_up_in_buttons"
+                android:weightSum="2">
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1">
+                    <Button
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_centerInParent="true"
+                        android:text="Sign Up"
+                        android:background="@drawable/circular_button"
+                        android:onClick="goToSignUp" />
+                </RelativeLayout>
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/si_username"
-                android:layout_margin="20dp"
-                android:padding="10dp"
-                android:hint="Password"
-                android:background="@color/gray"
-                android:id="@+id/si_password" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/si_password"
-                android:layout_margin="20dp"
-                android:padding="10dp"
-                android:text="Submit"
-                android:onClick="checkAccount"
-                android:id="@+id/submit_sign_in" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/si_password"
-                android:layout_toEndOf="@id/submit_sign_in"
-                android:layout_margin="20dp"
-                android:padding="10dp"
-                android:text=""
-                android:textColor="@color/colorPrimaryDark"
-                android:id="@+id/sign_in_result" />
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1">
+                    <Button
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_centerInParent="true"
+                        android:text="Sign In"
+                        android:background="@drawable/circular_button"
+                        android:onClick="goToSignIn" />
+                </RelativeLayout>
+            </LinearLayout>
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>
