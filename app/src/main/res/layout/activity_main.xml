@@ -155,14 +155,113 @@
                     android:layout_marginTop="10dp"
                     android:src="@drawable/heart_and_sole_icon"
                     android:id="@+id/share_routes_image" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/share_routes_image"
+                    android:layout_margin="10dp"
+                    android:text="Description of the share routes feature here."
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:id="@+id/share_routes_description"/>
             </RelativeLayout>
+
+            <ViewFlipper
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/share_routes_feature"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/rounded_box"
+                android:id="@+id/app_modes_description">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="Holy Walkamolie: Get a reward when you walk to a sponsored area!"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="Scavenger Run: Given route leads you to clues to solve a puzzle!"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="Red Hot Chili Steppers: Walk to a RHCP playlist!"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="Sole-ly For You: Get a unique route to walk!"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="Sole Mate: Walk with community members!"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="Been There, Run That: Share or get routes from friends!"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp"
+                    android:gravity="center" />
+            </ViewFlipper>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/app_modes_description"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
+                android:id="@+id/vf_buttons"
+                android:weightSum="2">
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Previous"
+                    android:onClick="moveVFLeft"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Next"
+                    android:onClick="moveVFRight"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
-                android:layout_below="@id/share_routes_feature"
+                android:layout_below="@id/vf_buttons"
                 android:layout_margin="10dp"
-                android:paddingTop="20dp"
                 android:orientation="horizontal"
                 android:clipChildren="false"
                 android:id="@+id/sign_up_in_buttons"

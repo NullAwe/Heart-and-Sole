@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">Heart and Sole</string>
+    <string name="app_description">The walking app that actively motivates users to go on walks.</string>
+
     <string name="title_activity_maps">Map</string>
 
     <string name="google_maps_key"
         templateMergeStrategy="preserve"
         translatable="false">AIzaSyDpZ4sNYkPadNxpNsL-jEsa4jC86QwLEBM</string>
-    <string name="app_description">The walking app that actively motivates users to go on walks.</string>
 </resources>
