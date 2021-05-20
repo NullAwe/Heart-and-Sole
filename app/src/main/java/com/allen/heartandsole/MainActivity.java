@@ -45,23 +45,15 @@ public class MainActivity extends AppCompatActivity {
         });
         appModesDesc = findViewById(R.id.app_modes_description);
         appModesDesc.setFlipInterval(7500);
-        appModesDesc.setInAnimation(this, R.anim.slide_in_right);
-        appModesDesc.setOutAnimation(this, R.anim.slide_out_left);
-//        appModesDesc.setInAnimation(this, R.anim.slide_in_left);
-//        appModesDesc.setOutAnimation(this, R.anim.slide_out_right);
         appModesDesc.startFlipping();
     }
 
     public void moveVFLeft(View view) {
-        appModesDesc.setInAnimation(this, R.anim.slide_in_left);
-        appModesDesc.setOutAnimation(this, R.anim.slide_out_right);
         appModesDesc.showPrevious();
         resetFlip();
     }
 
     public void moveVFRight(View view) {
-        appModesDesc.setInAnimation(this, R.anim.slide_in_right);
-        appModesDesc.setOutAnimation(this, R.anim.slide_out_left);
         appModesDesc.showNext();
         resetFlip();
     }
@@ -69,13 +61,6 @@ public class MainActivity extends AppCompatActivity {
     public void resetFlip() {
         appModesDesc.stopFlipping();
         appModesDesc.startFlipping();
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                appModesDesc.setInAnimation(MainActivity.this, R.anim.slide_in_right);
-                appModesDesc.setOutAnimation(MainActivity.this, R.anim.slide_out_left);
-            }
-        }, 100);
     }
 
     public void goToSignUp(View view) {
