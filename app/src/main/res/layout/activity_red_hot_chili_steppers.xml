@@ -40,4 +40,15 @@
         android:visibility="gone"
         android:onClick="pause"
         android:id="@+id/pause" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:text=""
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:id="@+id/song_description" />
 </RelativeLayout>

@@ -46,7 +46,7 @@
                     android:id="@+id/holy_walkamolie_heading"/>
 
                 <ImageButton
-                    android:layout_width="match_parent"
+                    android:layout_width="125dp"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:layout_below="@id/holy_walkamolie_heading"
@@ -76,7 +76,7 @@
                     android:id="@+id/scavenger_run_heading"/>
 
                 <ImageButton
-                    android:layout_width="match_parent"
+                    android:layout_width="125dp"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:layout_below="@id/scavenger_run_heading"
@@ -105,7 +105,7 @@
                     android:id="@+id/red_hot_chili_steppers_heading"/>
 
                 <ImageButton
-                    android:layout_width="match_parent"
+                    android:layout_width="125dp"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:layout_below="@id/red_hot_chili_steppers_heading"
@@ -142,7 +142,7 @@
                     android:id="@+id/solely_for_you_heading"/>
 
                 <ImageButton
-                    android:layout_width="match_parent"
+                    android:layout_width="125dp"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:layout_below="@id/solely_for_you_heading"
@@ -169,7 +169,7 @@
                     android:id="@+id/sole_mate_heading"/>
 
                 <ImageButton
-                    android:layout_width="match_parent"
+                    android:layout_width="125dp"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:layout_below="@id/sole_mate_heading"
@@ -198,7 +198,7 @@
                     android:id="@+id/been_there_run_that_heading"/>
 
                 <ImageButton
-                    android:layout_width="match_parent"
+                    android:layout_width="125dp"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:layout_below="@id/been_there_run_that_heading"

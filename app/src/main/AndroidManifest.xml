@@ -4,6 +4,7 @@
     package="com.allen.heartandsole">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -33,10 +34,6 @@
 
         <activity
             android:name=".SignInActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".MeActivity"
             android:screenOrientation="portrait" />
 
         <activity

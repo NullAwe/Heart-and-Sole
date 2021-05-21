@@ -50,7 +50,7 @@ public class SignInActivity extends AppCompatActivity {
                     break;
                 case SUCCESS:
                     resultText = "Successful!";
-                    Intent goToHomepage = new Intent(this, MeActivity.class);
+                    Intent goToHomepage = new Intent(this, HomepageActivity.class);
                     goToHomepage.putExtra("username", username);
                     startActivity(goToHomepage);
                     break;
