@@ -26,18 +26,31 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class GetDirectionsJSON {
 
-    private final String url;
+    private List<LatLng> route;
+    private int time;
 
-    public GetDirectionsJSON(String url) {
-        this.url = url;
+    public GetDirectionsJSON(String url) throws JSONException {
+        time = 0;
+        JSONObject json = new GetDirectionRunner().executeAsync(() -> url);
+        if (json == null) route = new ArrayList<>();
+        else {
+            JSONObject routes = json.getJSONArray("routes").getJSONObject(0);
+            JSONObject polyline = routes.getJSONObject("overview_polyline");
+            JSONArray legs = routes.getJSONArray("legs");
+            for (int i = 0, n = legs.length(); i < n; i++) {
+                time += legs.getJSONObject(i).getJSONObject("duration").getInt("value") / 60;
+            }
+            route = PolyUtil.decode(polyline.getString("points"));
+
+        }
     }
 
     public List<LatLng> getDirections() throws JSONException {
-        JSONObject json = new GetDirectionRunner().executeAsync(() -> url);
-        JSONArray routes = json.getJSONArray("routes");
-        JSONObject obj = routes.getJSONObject(0);
-        JSONObject polyline = obj.getJSONObject("overview_polyline");
-        return PolyUtil.decode(polyline.getString("points"));
+        return route;
+    }
+
+    public int getMinutes() {
+        return time;
     }
 
     private static List<LatLng> decodePoints(String encoded) {
@@ -80,7 +93,8 @@ public class GetDirectionsJSON {
                     e.printStackTrace();
                 }
             });
-            while (json.get() == null);
+            long millis = System.currentTimeMillis();
+            while (json.get() == null && System.currentTimeMillis() - millis < 5000);
             return json.get();
         }
 

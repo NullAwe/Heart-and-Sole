@@ -42,6 +42,7 @@ public class SolelyForYouMapFragment extends Fragment implements OnMapReadyCallb
     private GoogleMap map;
     private FusedLocationProviderClient locProv;
     private LatLng lastPos;
+    private Polyline cur;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent,
@@ -76,6 +77,7 @@ public class SolelyForYouMapFragment extends Fragment implements OnMapReadyCallb
                 if (locations.isEmpty()) return;
                 Location loc = locations.get(locations.size() - 1);
                 LatLng curPos = new LatLng(loc.getLatitude(), loc.getLongitude());
+                if (lastPos == null) lastPos = curPos;
                 Polyline line = map.addPolyline(new PolylineOptions().add(lastPos, curPos));
                 stylePolyline(line);
                 lastPos = curPos;
@@ -85,8 +87,26 @@ public class SolelyForYouMapFragment extends Fragment implements OnMapReadyCallb
             if (loc == null) return;
             lastPos = new LatLng(loc.getLatitude(), loc.getLongitude());
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(lastPos, 15.0f));
+            if (cur != null) {
+                PolylineOptions options = new PolylineOptions();
+                for (LatLng point : cur.getPoints()) options.add(point);
+                cur = map.addPolyline(options);
+                stylePathPolyline(cur);
+            }
         });
         locProv.requestLocationUpdates(lr, lc, Looper.myLooper());
+    }
+
+    public void setCur(Polyline polyline) {
+        cur = polyline;
+    }
+
+    private static void stylePathPolyline(Polyline polyline) {
+        polyline.setColor(0xff00aaff);
+        polyline.setWidth(20);
+        polyline.setJointType(JointType.ROUND);
+        polyline.setStartCap(new RoundCap());
+        polyline.setEndCap(new RoundCap());
     }
 
     private static void stylePolyline(Polyline polyline) {

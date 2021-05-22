@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,22 +30,8 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.RoundCap;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Map;
 
 public class SolelyForYouMainFragment extends Fragment implements OnMapReadyCallback {
 
@@ -55,6 +40,16 @@ public class SolelyForYouMainFragment extends Fragment implements OnMapReadyCall
 
     private GoogleMap map;
     private FusedLocationProviderClient locProv;
+
+    private final Map<Integer, List<LatLng>> routes;
+    private GetDirectionsJSON def;
+    private double angle;
+    private LatLng curPos;
+    private Polyline cur;
+
+    public SolelyForYouMainFragment(Map<Integer, List<LatLng>> routes) {
+        this.routes = routes;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent,
@@ -85,28 +80,88 @@ public class SolelyForYouMainFragment extends Fragment implements OnMapReadyCall
         LocationCallback lc = new LocationCallback() {};
         locProv.getLastLocation().addOnSuccessListener(activity, loc -> {
             if (loc == null) return;
-            LatLng curPos = new LatLng(loc.getLatitude(), loc.getLongitude());
+            curPos = new LatLng(loc.getLatitude(), loc.getLongitude());
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(curPos, 15.0f));
-            String http = "https://maps.googleapis.com/maps/api/directions/json?origin=" +
-                    curPos.latitude + "," + curPos.longitude + "&destination=" +
-                    (curPos.latitude + Math.random() * 0.015) + "," +
-                    (curPos.longitude + Math.random() * 0.015) +
-                    "&key=" + getString(R.string.google_maps_key) + "&mode=walking";
-            HttpURLConnection con;
+            if (cur != null) {
+                cur.remove();
+                PolylineOptions options = new PolylineOptions();
+                for (LatLng point : cur.getPoints()) options.add(point);
+                cur = map.addPolyline(options);
+                stylePolyline(cur);
+                return;
+            }
+            double dist = 0.01;
+            angle = Math.random() * 2 * Math.PI;
+            LatLng p1 = getPoint(curPos, angle, dist),
+                    p2 = getPoint(curPos, (angle + Math.PI / 3) % (2 * Math.PI), dist);
             try {
-                List<LatLng> points = new GetDirectionsJSON(http).getDirections();
-                for (int i = 1; i < points.size(); i++) {
-                    Polyline polyline = map.addPolyline(new PolylineOptions().add(
-                            points.get(i - 1),
-                            points.get(i)));
-                    stylePolyline(polyline);
-                }
+                def = new GetDirectionsJSON(getLink(curPos, p1, p2));
+                long millis = System.currentTimeMillis();
+                while (millis + 200 > System.currentTimeMillis());
+                changeRoute(30);
             } catch (Exception e) {
-                Log.i("allendebug", "sadge");
                 e.printStackTrace();
             }
         });
         locProv.requestLocationUpdates(lr, lc, Looper.myLooper());
+    }
+
+    public GetDirectionsJSON getDef() {
+        return def;
+    }
+
+    public double getAngle() {
+        return angle;
+    }
+
+    public LatLng getOrigin() {
+        return curPos;
+    }
+
+    public void setCur(Polyline polyline) {
+        if (cur != null) cur.remove();
+        cur = polyline;
+    }
+
+    public Polyline getCur() {
+        return cur;
+    }
+
+    private String getLink(LatLng curPos, LatLng p1, LatLng p2) {
+        return "https://maps.googleapis.com/maps/api/directions/json?origin=" +
+                curPos.latitude + "," + curPos.longitude + "&destination=" +
+                curPos.latitude + "," + curPos.longitude +  "&waypoints=" +
+                p1.latitude + "," + p1.longitude + "|" + p2.latitude + "," + p2.longitude +
+                "&key=" + getString(R.string.google_maps_key) + "&mode=walking";
+    }
+
+    private void changeRoute(int minutes) {
+        if (cur != null) cur.remove();
+        if (routes.containsKey(minutes)) {
+            PolylineOptions options = new PolylineOptions();
+            for (LatLng point : routes.get(minutes)) options.add(point);
+            cur = map.addPolyline(options);
+            stylePolyline(cur);
+            return;
+        }
+        try {
+            double dist = 0.1 * minutes / def.getMinutes() / 3;
+            LatLng p1 = getPoint(curPos, angle, dist),
+                    p2 = getPoint(curPos, ((angle + Math.PI / 3) % (2 * Math.PI)), dist);
+            List<LatLng> points = new GetDirectionsJSON(getLink(curPos, p1, p2)).getDirections();
+            routes.put(minutes, points);
+            PolylineOptions options = new PolylineOptions();
+            for (LatLng point : points) options.add(point);
+            cur = map.addPolyline(options);
+            stylePolyline(cur);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static LatLng getPoint(LatLng point, double angle, double dist) {
+        return new LatLng(point.latitude + Math.sin(angle) * dist,
+                point.longitude + Math.cos(angle) * dist);
     }
 
     private static void stylePolyline(Polyline polyline) {
