@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,8 +98,10 @@ public class SolelyForYouMainFragment extends Fragment implements OnMapReadyCall
             try {
                 def = new GetDirectionsJSON(getLink(curPos, p1, p2));
                 long millis = System.currentTimeMillis();
-                while (millis + 200 > System.currentTimeMillis());
-                changeRoute(30);
+                while (millis + 200 > System.currentTimeMillis())
+                    Log.i("SolelyForYouMainFragment", String.format("waiting for directions API, " +
+                            "%d milliseconds left", 200 - (System.currentTimeMillis() - millis)));
+                changeRouteTo30();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -135,21 +138,21 @@ public class SolelyForYouMainFragment extends Fragment implements OnMapReadyCall
                 "&key=" + getString(R.string.google_maps_key) + "&mode=walking";
     }
 
-    private void changeRoute(int minutes) {
+    private void changeRouteTo30() {
         if (cur != null) cur.remove();
-        if (routes.containsKey(minutes)) {
+        if (routes.containsKey(30)) {
             PolylineOptions options = new PolylineOptions();
-            for (LatLng point : routes.get(minutes)) options.add(point);
+            for (LatLng point : routes.get(30)) options.add(point);
             cur = map.addPolyline(options);
             stylePolyline(cur);
             return;
         }
         try {
-            double dist = 0.1 * minutes / def.getMinutes() / 3;
+            double dist = 0.1 * 30 / def.getMinutes() / 3;
             LatLng p1 = getPoint(curPos, angle, dist),
                     p2 = getPoint(curPos, ((angle + Math.PI / 3) % (2 * Math.PI)), dist);
             List<LatLng> points = new GetDirectionsJSON(getLink(curPos, p1, p2)).getDirections();
-            routes.put(minutes, points);
+            routes.put(30, points);
             PolylineOptions options = new PolylineOptions();
             for (LatLng point : points) options.add(point);
             cur = map.addPolyline(options);

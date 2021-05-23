@@ -1,8 +1,5 @@
 package com.allen.heartandsole;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.PolyUtil;
 
@@ -26,7 +23,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class GetDirectionsJSON {
 
-    private List<LatLng> route;
+    private final List<LatLng> route;
     private int time;
 
     public GetDirectionsJSON(String url) throws JSONException {
@@ -45,7 +42,7 @@ public class GetDirectionsJSON {
         }
     }
 
-    public List<LatLng> getDirections() throws JSONException {
+    public List<LatLng> getDirections() {
         return route;
     }
 
@@ -53,36 +50,9 @@ public class GetDirectionsJSON {
         return time;
     }
 
-    private static List<LatLng> decodePoints(String encoded) {
-        int index = 0, lat = 0, lng = 0;
-        List<com.google.android.gms.maps.model.LatLng> points = new ArrayList<>();
-        while (index < encoded.length()) {
-            int shift = 0, result = 0;
-            while (true) {
-                int b = encoded.charAt(index++) - '?';
-                result |= ((b & 31) << shift);
-                shift += 5;
-                if (b < 32) break;
-            }
-            lat += ((result & 1) != 0 ? ~(result >> 1) : result >> 1);
-            shift = 0;
-            result = 0;
-            while (true) {
-                int b = encoded.charAt(index++) - '?';
-                result |= ((b & 31) << shift);
-                shift += 5;
-                if (b < 32) break;
-            }
-            lng += ((result & 1) != 0 ? ~(result >> 1) : result >> 1);
-            points.add(new com.google.android.gms.maps.model.LatLng(lat * 10,lng * 10));
-        }
-        return points;
-    }
-
     private static class GetDirectionRunner {
 
         private final Executor executor = Executors.newSingleThreadExecutor();
-        private final Handler handler = new Handler(Looper.getMainLooper());
 
         public JSONObject executeAsync(Callable<String> callable) {
             final AtomicReference<JSONObject> json = new AtomicReference<>();

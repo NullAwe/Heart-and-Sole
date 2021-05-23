@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 
-import com.allen.heartandsole.GetDirectionsJSON;
 import com.allen.heartandsole.R;
 import com.google.android.gms.maps.model.LatLng;
 
