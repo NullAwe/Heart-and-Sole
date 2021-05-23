@@ -6,11 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".solely_for_you.SolelyForYouActivity">
-    <fragment
-        class="com.google.android.gms.maps.SupportMapFragment"
+
+    <nl.dionsegijn.konfetti.KonfettiView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/map" />
+        android:id="@+id/confetti" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="Event Added!"
+        android:textSize="30sp"
+        android:textColor="@color/colorPrimary"
+        android:gravity="center" />
 
     <Button
         android:layout_width="wrap_content"
@@ -18,6 +27,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
-        android:onClick="switchToDone"
-        android:text="I'm Done"/>
+        android:onClick="backToHomepage"
+        android:text="Back to Homepage" />
 </RelativeLayout>

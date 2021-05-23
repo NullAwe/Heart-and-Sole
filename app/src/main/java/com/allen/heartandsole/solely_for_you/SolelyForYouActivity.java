@@ -66,4 +66,12 @@ public class SolelyForYouActivity extends AppCompatActivity {
         FragmentTransaction ft = fragMan.beginTransaction();
         ft.replace(R.id.fragment, mainFragment).commit();
     }
+
+    public void switchToDone(View view) {
+        fragMan.beginTransaction().replace(R.id.fragment, new SolelyForYouDoneFragment()).commit();
+    }
+
+    public void backToHomepage(View view) {
+        super.onBackPressed();
+    }
 }
