@@ -32,7 +32,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:onClick="onBottomBarClicked"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:id="@+id/info">
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
@@ -50,7 +51,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:onClick="onBottomBarClicked"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:id="@+id/walk">
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
@@ -60,7 +62,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Walk"
+                android:text="Walk!"
                 android:textColor="@color/colorAccent"
                 android:gravity="center" />
         </RelativeLayout>

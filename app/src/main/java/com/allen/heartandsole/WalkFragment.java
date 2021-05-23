@@ -1,5 +1,6 @@
 package com.allen.heartandsole;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,11 +8,19 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 public class WalkFragment extends Fragment {
+
+    private final LocalUserAPI userAPI;
+
+    public WalkFragment(LocalUserAPI userAPI) {
+        this.userAPI = userAPI;
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent,
                              Bundle savedInstanceState) {
@@ -21,6 +30,15 @@ public class WalkFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         makeNavButtonsCircular(view);
+        if (!userAPI.hasAccount()) {
+            Bundle bundle = new Bundle();
+            bundle.putBinder("userAPI", new BinderWrapper<>(userAPI));
+            Intent intent = new Intent(getContext(), SignUpActivity.class);
+            startActivity(intent.putExtras(bundle));
+            return;
+        }
+        String welcome = "Welcome, " + userAPI.getUsername();
+        ((TextView) view.findViewById(R.id.me_heading)).setText(welcome);
     }
 
     private static void makeNavButtonsCircular(View view) {

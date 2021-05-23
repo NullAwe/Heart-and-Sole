@@ -14,7 +14,15 @@ import androidx.fragment.app.FragmentManager;
 
 import com.allen.heartandsole.solely_for_you.SolelyForYouActivity;
 
+/**
+ * This is the Activity that inflates upon opening the app. Users are presented with an
+ * information page describing the app if it is their first time opening the app. If it is not
+ * their first time opening the app, they are sent directly to the main functioning portion of
+ * the app.
+ */
 public class HomepageActivity extends AppCompatActivity {
+
+    private LocalUserAPI userAPI;
 
     private FragmentManager fragMan;
     private int curFrag;
@@ -23,6 +31,12 @@ public class HomepageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
+        // Initializes class fields:
+        userAPI = new LocalUserAPI(this);
+        fragMan = getSupportFragmentManager();
+        curFrag = -1;
+        // Sets the viewed fragment:
+        onBottomBarClicked(findViewById(userAPI.hasAccount() ? R.id.walk : R.id.info));
         // Sets a custom toolbar:
         Toolbar toolbar = findViewById(R.id.toolbar);
         setActionBar(toolbar);
@@ -30,10 +44,6 @@ public class HomepageActivity extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setCustomView(R.layout.toolbar);
-        // Sets the viewed fragment to the info page:
-        fragMan = getSupportFragmentManager();
-        fragMan.beginTransaction().replace(R.id.fragment, new AppInfoFragment()).commit();
-        curFrag = 0;
     }
 
     public void onBottomBarClicked(View view) {
@@ -50,8 +60,8 @@ public class HomepageActivity extends AppCompatActivity {
         curFrag = id;
     }
 
-    public Fragment getFragment(int id) {
-        return id == 0 ? new AppInfoFragment() : new WalkFragment();
+    private Fragment getFragment(int id) {
+        return id == 0 ? new AppInfoFragment() : new WalkFragment(userAPI);
     }
 
     public void goToSolelyForYou(View view) {
