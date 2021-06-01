@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.allen.heartandsole.scavenger_run.ScavengerRunActivity;
 import com.allen.heartandsole.solely_for_you.SolelyForYouActivity;
 
 /**
@@ -66,6 +67,10 @@ public class HomepageActivity extends AppCompatActivity {
 
     public void goToSolelyForYou(View view) {
         startActivity(new Intent(this, SolelyForYouActivity.class));
+    }
+
+    public void goToScavengerRun(View view) {
+        startActivity(new Intent(this, ScavengerRunActivity.class));
     }
 
     public void goToRedHotChiliSteppers(View view) {

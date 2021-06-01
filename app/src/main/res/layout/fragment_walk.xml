@@ -55,8 +55,7 @@
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
                     android:background="@drawable/circular_button"
-                    android:elevation="1dp"
-                    android:layout_weight="1" />
+                    android:elevation="1dp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -85,7 +84,7 @@
                     android:adjustViewBounds="true"
                     android:background="@drawable/circular_button"
                     android:elevation="1dp"
-                    android:layout_weight="1" />
+                    android:onClick="goToScavengerRun" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -114,8 +113,7 @@
                     android:adjustViewBounds="true"
                     android:background="@drawable/circular_button"
                     android:elevation="1dp"
-                    android:onClick="goToRedHotChiliSteppers"
-                    android:layout_weight="1" />
+                    android:onClick="goToRedHotChiliSteppers" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -148,8 +146,7 @@
                     android:layout_below="@id/solely_for_you_heading"
                     android:background="@drawable/circular_button"
                     android:elevation="1dp"
-                    android:onClick="goToSolelyForYou"
-                    android:layout_weight="1" />
+                    android:onClick="goToSolelyForYou" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -177,8 +174,7 @@
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
                     android:background="@drawable/circular_button"
-                    android:elevation="1dp"
-                    android:layout_weight="1" />
+                    android:elevation="1dp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -206,8 +202,7 @@
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
                     android:background="@drawable/circular_button"
-                    android:elevation="1dp"
-                    android:layout_weight="1" />
+                    android:elevation="1dp" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

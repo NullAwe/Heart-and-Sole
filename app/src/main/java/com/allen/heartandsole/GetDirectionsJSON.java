@@ -24,10 +24,11 @@ import java.util.concurrent.atomic.AtomicReference;
 public class GetDirectionsJSON {
 
     private final List<LatLng> route;
-    private int time;
+    private float time;
+    private float distance;
 
     public GetDirectionsJSON(String url) throws JSONException {
-        time = 0;
+        time = distance = 0;
         JSONObject json = new GetDirectionRunner().executeAsync(() -> url);
         if (json == null) route = new ArrayList<>();
         else {
@@ -35,8 +36,10 @@ public class GetDirectionsJSON {
             JSONObject polyline = routes.getJSONObject("overview_polyline");
             JSONArray legs = routes.getJSONArray("legs");
             for (int i = 0, n = legs.length(); i < n; i++) {
-                time += legs.getJSONObject(i).getJSONObject("duration").getInt("value") / 60;
+                time += legs.getJSONObject(i).getJSONObject("duration").getInt("value") / 60.0;
+                distance += legs.getJSONObject(i).getJSONObject("distance").getInt("value");
             }
+            distance /= 1609;
             route = PolyUtil.decode(polyline.getString("points"));
 
         }
@@ -46,8 +49,12 @@ public class GetDirectionsJSON {
         return route;
     }
 
-    public int getMinutes() {
+    public float getMinutes() {
         return time;
+    }
+
+    public float getMiles() {
+        return distance;
     }
 
     private static class GetDirectionRunner {
