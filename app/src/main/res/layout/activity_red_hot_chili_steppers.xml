@@ -51,4 +51,17 @@
         android:textColor="@color/colorPrimaryDark"
         android:gravity="center"
         android:id="@+id/song_description" />
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_skip"
+        android:background="@drawable/circular_button"
+        android:backgroundTint="@color/colorPrimary"
+        android:onClick="playNext"
+        android:id="@+id/skip" />
 </RelativeLayout>

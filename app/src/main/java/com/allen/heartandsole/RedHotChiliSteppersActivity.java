@@ -63,17 +63,7 @@ public class RedHotChiliSteppersActivity extends AppCompatActivity {
         updateSongDescription();
 
         player.setOnCompletionListener(mPlayer -> {
-            index = (index + 1) % playlist.size();
-            try {
-                player.reset();
-                player.setDataSource(RedHotChiliSteppersActivity.this.getResources()
-                        .openRawResourceFd(playlist.get(index).resId));
-                player.prepare();
-                player.start();
-                updateSongDescription();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            playNext(null);
         });
     }
 
@@ -94,6 +84,19 @@ public class RedHotChiliSteppersActivity extends AppCompatActivity {
         player.pause();
         view.setVisibility(View.GONE);
         findViewById(R.id.play).setVisibility(View.VISIBLE);
+    }
+
+    public void playNext(View view) {
+        index = (index + 1) % playlist.size();
+        player.reset();
+        try {
+            player.setDataSource(this.getResources().openRawResourceFd(playlist.get(index).resId));
+            player.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        player.start();
+        updateSongDescription();
     }
 
     private void updateSongDescription() {
