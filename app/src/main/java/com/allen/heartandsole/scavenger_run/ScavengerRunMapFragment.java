@@ -33,6 +33,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.RoundCap;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ScavengerRunMapFragment extends Fragment implements OnMapReadyCallback {
 
@@ -43,7 +44,7 @@ public class ScavengerRunMapFragment extends Fragment implements OnMapReadyCallb
     private GoogleMap map;
     private FusedLocationProviderClient locProv;
     private LatLng dest;
-    private PolylineOptions line = new PolylineOptions();
+    private final PolylineOptions line = new PolylineOptions();
 //    private Polyline point;
 
     @Override
@@ -83,7 +84,8 @@ public class ScavengerRunMapFragment extends Fragment implements OnMapReadyCallb
                 line.add(curPos);
                 stylePolyline(map.addPolyline(line));
                 ((TextView) view.findViewById(R.id.distance)).setText(
-                        String.format("Direct distance to target (nearest 0.1 mile): %.1f",
+                        String.format(Locale.getDefault(),
+                                "Direct distance to target (nearest 0.1 mile): %.1f",
                                 distance(curPos, dest)));
 //                if (point != null) point.remove();
 //                point = map.addPolyline(new PolylineOptions().add(curPos,

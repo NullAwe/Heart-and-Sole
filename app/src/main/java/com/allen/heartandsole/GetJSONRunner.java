@@ -1,5 +1,7 @@
 package com.allen.heartandsole;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,7 +31,9 @@ public class GetJSONRunner {
             }
         });
         long millis = System.currentTimeMillis();
-        while (json.get() == null && System.currentTimeMillis() - millis < 5000);
+        while (json.get() == null && System.currentTimeMillis() - millis < 5000) {
+            Log.i("GetJSONRunner", "waiting for response");
+        }
         return json.get();
     }
 

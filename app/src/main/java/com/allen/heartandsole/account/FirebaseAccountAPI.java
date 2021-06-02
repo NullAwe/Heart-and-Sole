@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("unused")
 public class FirebaseAccountAPI implements AccountAPI {
 
     private final SignUpResponseHandler signUpResponseHandler;

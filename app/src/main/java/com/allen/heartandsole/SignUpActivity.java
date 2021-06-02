@@ -11,9 +11,6 @@ import androidx.appcompat.widget.Toolbar;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    // Displays when the EditText fields do not fit within length requirements:
-    private static final String LEN_MESSAGE = "Name does not fit length requirements.";
-
     // Used for signing up a new account:
     private LocalUserAPI userAPI;
 
@@ -38,7 +35,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     // Signs up a new account:
     public void signUp(View view) {
-        userAPI.addAccount(((EditText) findViewById(R.id.username)).getText().toString());
+        String un = ((EditText) findViewById(R.id.username)).getText().toString();
+        if (un.length() < 1) userAPI.addAccount(null);
+        else userAPI.addAccount(un);
         super.onBackPressed();
     }
 }

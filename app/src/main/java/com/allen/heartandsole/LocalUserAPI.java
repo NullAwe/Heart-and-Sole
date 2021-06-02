@@ -23,7 +23,6 @@ public class LocalUserAPI {
 
     public void addAccount(String username) {
         SharedPreferences acc = context.getSharedPreferences(ACC, Context.MODE_PRIVATE);
-        if (acc.getString(UN, null) != null) return;
         SharedPreferences.Editor editor = acc.edit();
         editor.putString(UN, username);
         editor.apply();

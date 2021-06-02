@@ -142,7 +142,9 @@ public class SolelyForYouMainFragment extends Fragment implements OnMapReadyCall
         if (cur != null) cur.remove();
         if (routes.containsKey(30)) {
             PolylineOptions options = new PolylineOptions();
-            for (LatLng point : routes.get(30)) options.add(point);
+            List<LatLng> route = routes.get(30);
+            if (route == null) return;
+            for (LatLng point : route) options.add(point);
             cur = map.addPolyline(options);
             stylePolyline(cur);
             return;

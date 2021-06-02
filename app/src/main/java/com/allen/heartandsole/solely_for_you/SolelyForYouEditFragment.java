@@ -113,7 +113,9 @@ public class SolelyForYouEditFragment extends Fragment implements OnMapReadyCall
         if (cur != null) cur.remove();
         if (routes.containsKey(minutes)) {
             PolylineOptions options = new PolylineOptions();
-            for (LatLng point : routes.get(minutes)) options.add(point);
+            List<LatLng> route = routes.get(minutes);
+            if (route == null) return;
+            for (LatLng point : route) options.add(point);
             cur = map.addPolyline(options);
             stylePolyline(cur);
             return;

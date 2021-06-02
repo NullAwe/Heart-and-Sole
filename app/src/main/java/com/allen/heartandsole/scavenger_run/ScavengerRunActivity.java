@@ -4,17 +4,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.View;
 
 import com.allen.heartandsole.R;
-import com.google.android.gms.maps.model.LatLng;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class ScavengerRunActivity extends AppCompatActivity {
 

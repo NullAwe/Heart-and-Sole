@@ -4,8 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,14 +25,11 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 
-import java.net.URL;
-import java.net.URLConnection;
+import java.util.Locale;
 
 public class ScavengerRunMainFragment extends Fragment implements OnMapReadyCallback {
 
@@ -87,9 +82,10 @@ public class ScavengerRunMainFragment extends Fragment implements OnMapReadyCall
                 GetDirectionsJSON dirs = new GetDirectionsJSON(getDirUrl(curPos, dest));
                 float mins = dirs.getMinutes(), mils = dirs.getMiles();
                 ((TextView) view.findViewById(R.id.walking_time)).setText(
-                        String.format("Expected walking time: %.2f min", mins));
+                        String.format(Locale.getDefault(), "Expected walking time: %.2f min",
+                                mins));
                 ((TextView) view.findViewById(R.id.walking_dist)).setText(
-                        String.format("Walking dist: %.2f mi", mils));
+                        String.format(Locale.getDefault(), "Walking dist: %.2f mi", mils));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -111,16 +107,5 @@ public class ScavengerRunMainFragment extends Fragment implements OnMapReadyCall
                 location.latitude + "," + location.longitude + "&destination=" +
                 dest.latitude + "," + dest.longitude + "&key=" +
                 getString(R.string.google_maps_key) + "&mode=walking";
-    }
-
-    private static Bitmap getBitmap(String url) {
-        try {
-            URL u = new URL(url);
-            URLConnection con = u.openConnection();
-
-            return BitmapFactory.decodeStream(u.openConnection().getInputStream());
-        } catch (Exception e) {
-            return null;
-        }
     }
 }

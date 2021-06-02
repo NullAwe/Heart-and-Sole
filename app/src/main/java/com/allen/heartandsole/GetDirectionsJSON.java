@@ -1,5 +1,7 @@
 package com.allen.heartandsole;
 
+import android.util.Log;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.PolyUtil;
 
@@ -71,7 +73,9 @@ public class GetDirectionsJSON {
                 }
             });
             long millis = System.currentTimeMillis();
-            while (json.get() == null && System.currentTimeMillis() - millis < 5000);
+            while (json.get() == null && System.currentTimeMillis() - millis < 5000) {
+                Log.i("GetDirectionsJSON", "waiting for response");
+            }
             return json.get();
         }
 

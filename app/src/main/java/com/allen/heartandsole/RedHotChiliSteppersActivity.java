@@ -62,9 +62,7 @@ public class RedHotChiliSteppersActivity extends AppCompatActivity {
         songDescription = findViewById(R.id.song_description);
         updateSongDescription();
 
-        player.setOnCompletionListener(mPlayer -> {
-            playNext(null);
-        });
+        player.setOnCompletionListener(mPlayer -> playNext(null));
     }
 
     @Override
