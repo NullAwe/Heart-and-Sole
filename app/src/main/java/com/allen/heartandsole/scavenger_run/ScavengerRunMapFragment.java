@@ -44,7 +44,7 @@ public class ScavengerRunMapFragment extends Fragment implements OnMapReadyCallb
     private FusedLocationProviderClient locProv;
     private LatLng dest;
     private PolylineOptions line = new PolylineOptions();
-    private Polyline point;
+//    private Polyline point;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent,
@@ -85,11 +85,11 @@ public class ScavengerRunMapFragment extends Fragment implements OnMapReadyCallb
                 ((TextView) view.findViewById(R.id.distance)).setText(
                         String.format("Direct distance to target (nearest 0.1 mile): %.1f",
                                 distance(curPos, dest)));
-                if (point != null) point.remove();
-                point = map.addPolyline(new PolylineOptions().add(curPos,
-                        new LatLng(curPos.latitude + (dest.latitude - curPos.latitude) / 3,
-                                curPos.longitude + (dest.longitude - curPos.longitude) / 3)));
-                stylePolyline(point);
+//                if (point != null) point.remove();
+//                point = map.addPolyline(new PolylineOptions().add(curPos,
+//                        new LatLng(curPos.latitude + (dest.latitude - curPos.latitude) / 3,
+//                                curPos.longitude + (dest.longitude - curPos.longitude) / 3)));
+//                stylePolyline(point);
             }
         };
         locProv.getLastLocation().addOnSuccessListener(activity, loc -> {

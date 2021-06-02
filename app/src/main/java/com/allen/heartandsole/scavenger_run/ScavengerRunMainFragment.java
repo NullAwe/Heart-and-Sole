@@ -76,12 +76,14 @@ public class ScavengerRunMainFragment extends Fragment implements OnMapReadyCall
             try {
                 LatLng curPos = new LatLng(loc.getLatitude(), loc.getLongitude());
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(curPos, 15.0f));
+
+
                 GetNearbyPOIs get = new GetNearbyPOIs(getPOIUrl(curPos),
                         context.getString(R.string.google_maps_key));
-                Picasso.get().load(get.getImages().get(0)).into((ImageView)
+                int ind = (int) (Math.random() * get.getImages().size());
+                Picasso.get().load(get.getImages().get(ind)).into((ImageView)
                         view.findViewById(R.id.scav_image));
-
-                dest = get.getNearbyPOIs().get(0);
+                dest = get.getNearbyPOIs().get(ind);
                 GetDirectionsJSON dirs = new GetDirectionsJSON(getDirUrl(curPos, dest));
                 float mins = dirs.getMinutes(), mils = dirs.getMiles();
                 ((TextView) view.findViewById(R.id.walking_time)).setText(
