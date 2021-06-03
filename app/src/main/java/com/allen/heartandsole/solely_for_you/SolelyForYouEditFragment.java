@@ -121,10 +121,9 @@ public class SolelyForYouEditFragment extends Fragment implements OnMapReadyCall
             return;
         }
         try {
-            double dist = 0.1 * minutes / def.getMinutes() / 3;
-            LatLng p1 = getPoint(origin, angle, dist),
-                    p2 = getPoint(origin, ((angle + Math.PI / 3) % (2 * Math.PI)), dist);
-            List<LatLng> points = new GetDirectionsJSON(getLink(origin, p1, p2)).getDirections();
+            double dist = 0.1 * minutes / def.getMinutes() / 5;
+            LatLng p1 = getPoint(origin, angle, dist);
+            List<LatLng> points = new GetDirectionsJSON(getLink(origin, p1)).getDirections();
             routes.put(minutes, points);
             PolylineOptions options = new PolylineOptions();
             for (LatLng point : points) options.add(point);
@@ -135,11 +134,10 @@ public class SolelyForYouEditFragment extends Fragment implements OnMapReadyCall
         }
     }
 
-    private String getLink(LatLng curPos, LatLng p1, LatLng p2) {
+    private String getLink(LatLng curPos, LatLng p1) {
         return "https://maps.googleapis.com/maps/api/directions/json?origin=" +
                 curPos.latitude + "," + curPos.longitude + "&destination=" +
-                curPos.latitude + "," + curPos.longitude +  "&waypoints=" +
-                p1.latitude + "," + p1.longitude + "|" + p2.latitude + "," + p2.longitude +
+                p1.latitude + "," + p1.longitude +
                 "&key=" + getString(R.string.google_maps_key) + "&mode=walking";
     }
 

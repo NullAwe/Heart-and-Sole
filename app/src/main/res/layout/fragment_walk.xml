@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,7 +15,7 @@
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         android:gravity="center"
-        android:id="@+id/me_heading"/>
+        android:id="@+id/me_heading" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,10 +44,10 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textStyle="bold"
                     android:gravity="center"
-                    android:id="@+id/holy_walkamolie_heading"/>
+                    android:id="@+id/holy_walkamolie_heading" />
 
                 <ImageButton
-                    android:layout_width="125dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:layout_below="@id/holy_walkamolie_heading"
@@ -54,7 +55,7 @@
                     android:src="@drawable/holy_walkamolie"
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/circular_button"
+                    android:background="@android:color/transparent"
                     android:elevation="1dp" />
             </RelativeLayout>
 
@@ -75,7 +76,7 @@
                     android:id="@+id/scavenger_run_heading"/>
 
                 <ImageButton
-                    android:layout_width="125dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:layout_below="@id/scavenger_run_heading"
@@ -83,7 +84,7 @@
                     android:src="@drawable/scavenger_run"
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/circular_button"
+                    android:background="@android:color/transparent"
                     android:onClick="goToScavengerRun"
                     android:elevation="1dp" />
             </RelativeLayout>
@@ -105,7 +106,7 @@
                     android:id="@+id/red_hot_chili_steppers_heading"/>
 
                 <ImageButton
-                    android:layout_width="125dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:layout_below="@id/red_hot_chili_steppers_heading"
@@ -113,7 +114,7 @@
                     android:src="@drawable/red_hot_chili_steppers"
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/circular_button"
+                    android:background="@android:color/transparent"
                     android:elevation="1dp"
                     android:onClick="goToRedHotChiliSteppers" />
             </RelativeLayout>
@@ -142,7 +143,7 @@
                     android:id="@+id/solely_for_you_heading"/>
 
                 <ImageButton
-                    android:layout_width="125dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:layout_below="@id/solely_for_you_heading"
@@ -150,7 +151,7 @@
                     android:src="@drawable/solely_for_you"
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/circular_button"
+                    android:background="@android:color/transparent"
                     android:onClick="goToSolelyForYou"
                     android:elevation="1dp" />
             </RelativeLayout>
@@ -172,7 +173,7 @@
                     android:id="@+id/sole_mate_heading"/>
 
                 <ImageButton
-                    android:layout_width="125dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:layout_below="@id/sole_mate_heading"
@@ -180,7 +181,7 @@
                     android:src="@drawable/sole_mate"
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/circular_button"
+                    android:background="@android:color/transparent"
                     android:elevation="1dp" />
             </RelativeLayout>
 
@@ -201,7 +202,7 @@
                     android:id="@+id/been_there_run_that_heading"/>
 
                 <ImageButton
-                    android:layout_width="125dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:layout_below="@id/been_there_run_that_heading"
@@ -209,7 +210,7 @@
                     android:src="@drawable/been_there_run_that"
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/circular_button"
+                    android:background="@android:color/transparent"
                     android:elevation="1dp" />
             </RelativeLayout>
         </LinearLayout>

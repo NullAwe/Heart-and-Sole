@@ -1,14 +1,21 @@
 package com.allen.heartandsole;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowInsets;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toolbar;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -26,6 +33,8 @@ public class HomepageActivity extends AppCompatActivity {
     private FragmentManager fragMan;
     private int curFrag;
 
+    private SignUpFragment signUpFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +43,7 @@ public class HomepageActivity extends AppCompatActivity {
         SharedPrefSingleton.setContext(this);
         fragMan = getSupportFragmentManager();
         curFrag = -1;
+        signUpFragment = new SignUpFragment();
         // Sets the viewed fragment:
         onBottomBarClicked(findViewById(SharedPrefSingleton.getInstance().hasAccount() ?
                 R.id.walk : R.id.info));
@@ -56,12 +66,31 @@ public class HomepageActivity extends AppCompatActivity {
         }
         ((RelativeLayout) view).getChildAt(0).setVisibility(View.VISIBLE);
         if (id == curFrag) return;
-        fragMan.beginTransaction().replace(R.id.fragment, getFragment(id)).commit();
+        setFragment(id);
         curFrag = id;
     }
 
-    private Fragment getFragment(int id) {
-        return id == 0 ? new AppInfoFragment() : new WalkFragment();
+
+    public void switchToInfoFragment(View view) {
+        fragMan.beginTransaction().replace(R.id.fragment, new AppInfoFragment()).commit();
+    }
+
+    public void switchToWalkFragment(View view) {
+        if (!SharedPrefSingleton.getInstance().hasAccount())
+            fragMan.beginTransaction().replace(R.id.fragment, signUpFragment).commit();
+        else
+            fragMan.beginTransaction().replace(R.id.fragment, new WalkFragment()).commit();
+    }
+
+    private void setFragment(int id) {
+        if (id == 0) switchToInfoFragment(null);
+        else switchToWalkFragment(null);
+    }
+
+    public void signUp(View view) {
+        String un = signUpFragment.getUN();
+        SharedPrefSingleton.getInstance().addAccount(un.length() == 0 ? null : un);
+        switchToWalkFragment(null);
     }
 
     public void goToSolelyForYou(View view) {
