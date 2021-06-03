@@ -10,18 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class SignUpActivity extends AppCompatActivity {
-
-    // Used for signing up a new account:
-    private LocalUserAPI userAPI;
-
-    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        // Initializes class fields:
-        userAPI = ((BinderWrapper<LocalUserAPI>)
-                getIntent().getExtras().getBinder("userAPI")).get();
         // Sets a custom toolbar:
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -36,8 +28,7 @@ public class SignUpActivity extends AppCompatActivity {
     // Signs up a new account:
     public void signUp(View view) {
         String un = ((EditText) findViewById(R.id.username)).getText().toString();
-        if (un.length() < 1) userAPI.addAccount(null);
-        else userAPI.addAccount(un);
+        SharedPrefSingleton.getInstance().addAccount(un.length() == 0 ? null : un);
         super.onBackPressed();
     }
 }

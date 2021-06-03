@@ -1,118 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomepageActivity">
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/app_name"
+            android:textSize="35sp"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:id="@+id/title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/title"
+            android:layout_margin="10dp"
+            android:text="@string/app_description"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"
+            android:id="@+id/app_description" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="30dp">
+            android:layout_below="@id/app_description"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/unique_route_feature">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/trees"
+                android:scaleType="centerCrop"
+                android:id="@+id/unique_route_feature_bg" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/colorPrimaryDark"
+                android:id="@+id/darkener" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/app_name"
-                android:textSize="35sp"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:id="@+id/title" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/title"
                 android:layout_margin="10dp"
-                android:text="@string/app_description"
-                android:textSize="20sp"
-                android:textColor="@color/colorPrimary"
+                android:paddingTop="10dp"
+                android:text="Sole-ly For You\n\nEvery walk is unique."
+                android:textSize="25sp"
+                android:textColor="@color/colorAccent"
+                android:textStyle="italic"
                 android:gravity="center"
-                android:id="@+id/app_description" />
+                android:id="@+id/unique_route_heading" />
 
-            <RelativeLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/app_description"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/unique_route_feature">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:src="@drawable/trees"
-                    android:scaleType="centerCrop"
-                    android:id="@+id/unique_route_feature_bg" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:background="@color/colorPrimaryDark"
-                    android:id="@+id/darkener" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_margin="10dp"
-                    android:paddingTop="10dp"
-                    android:text="Sole-ly For You\n\nEvery walk is unique."
-                    android:textSize="25sp"
-                    android:textColor="@color/colorAccent"
-                    android:textStyle="italic"
-                    android:gravity="center"
-                    android:id="@+id/unique_route_heading" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/unique_route_heading"
-                    android:layout_margin="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="Our route generator delivers a fresh experience for every walk."
-                    android:textColor="@color/colorAccent"
-                    android:textSize="18sp"
-                    android:gravity="center"
-                    android:id="@+id/unique_route_description"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/unique_route_feature"
-                android:id="@+id/share_routes_feature">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_margin="10dp"
-                    android:paddingTop="10dp"
-                    android:text="Been There, Run That\n\nShare routes with friends!"
-                    android:textSize="25sp"
-                    android:textColor="@color/colorPrimary"
-                    android:textStyle="italic"
-                    android:gravity="center"
-                    android:id="@+id/share_routes_heading" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/share_routes_heading"
-                    android:layout_margin="10dp"
-                    android:text="Share your favorite experiences with the click of a button."
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="18sp"
-                    android:gravity="center"
-                    android:id="@+id/share_routes_description"/>
-            </RelativeLayout>
+                android:layout_below="@id/unique_route_heading"
+                android:layout_margin="10dp"
+                android:paddingBottom="10dp"
+                android:text="Our route generator delivers a fresh experience for every walk."
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:id="@+id/unique_route_description"/>
         </RelativeLayout>
-    </ScrollView>
-</RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/unique_route_feature"
+            android:id="@+id/share_routes_feature">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                android:paddingTop="10dp"
+                android:text="Been There, Run That\n\nShare routes with friends!"
+                android:textSize="25sp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="italic"
+                android:gravity="center"
+                android:id="@+id/share_routes_heading" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/share_routes_heading"
+                android:layout_margin="10dp"
+                android:text="Share your favorite experiences with the click of a button."
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:id="@+id/share_routes_description"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

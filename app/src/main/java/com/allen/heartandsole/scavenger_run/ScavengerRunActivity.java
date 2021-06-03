@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.allen.heartandsole.R;
+import com.allen.heartandsole.solely_for_you.SolelyForYouDoneFragment;
 
 public class ScavengerRunActivity extends AppCompatActivity {
 
@@ -52,6 +53,10 @@ public class ScavengerRunActivity extends AppCompatActivity {
         imageFragment.setGetNearbyPOIs(mainFragment.getLocation(), mainFragment.getRadius(),
                 mainFragment.getType());
         fragMan.beginTransaction().replace(R.id.fragment, imageFragment).commit();
+    }
+
+    public void switchToDone(View view) {
+        fragMan.beginTransaction().replace(R.id.fragment, new ScavengerRunDoneFragment()).commit();
     }
 
     public void backToHomepage(View view) {

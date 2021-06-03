@@ -83,15 +83,17 @@ public class ScavengerRunMapFragment extends Fragment implements OnMapReadyCallb
                 LatLng curPos = new LatLng(loc.getLatitude(), loc.getLongitude());
                 line.add(curPos);
                 stylePolyline(map.addPolyline(line));
+                double dist = distance(curPos, dest);
                 ((TextView) view.findViewById(R.id.distance)).setText(
                         String.format(Locale.getDefault(),
                                 "Direct distance to target (nearest 0.1 mile): %.1f",
-                                distance(curPos, dest)));
+                                dist));
 //                if (point != null) point.remove();
 //                point = map.addPolyline(new PolylineOptions().add(curPos,
 //                        new LatLng(curPos.latitude + (dest.latitude - curPos.latitude) / 3,
 //                                curPos.longitude + (dest.longitude - curPos.longitude) / 3)));
 //                stylePolyline(point);
+                if (dist < 0.05) view.findViewById(R.id.done).setVisibility(View.VISIBLE);
             }
         };
         locProv.getLastLocation().addOnSuccessListener(activity, loc -> {

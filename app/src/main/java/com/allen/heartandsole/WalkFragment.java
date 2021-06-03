@@ -15,13 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 public class WalkFragment extends Fragment {
-
-    private final LocalUserAPI userAPI;
-
-    public WalkFragment(LocalUserAPI userAPI) {
-        this.userAPI = userAPI;
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent,
                              Bundle savedInstanceState) {
@@ -31,14 +24,12 @@ public class WalkFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         makeNavButtonsCircular(view);
-        if (!userAPI.hasAccount()) {
-            Bundle bundle = new Bundle();
-            bundle.putBinder("userAPI", new BinderWrapper<>(userAPI));
-            Intent intent = new Intent(getContext(), SignUpActivity.class);
-            startActivity(intent.putExtras(bundle));
+        SharedPrefSingleton sharedPrefSingleton = SharedPrefSingleton.getInstance();
+        if (!sharedPrefSingleton.hasAccount()) {
+            startActivity(new Intent(requireContext(), SignUpActivity.class));
             return;
         }
-        String welcome = "Welcome, " + userAPI.getUsername();
+        String welcome = "Welcome, " + sharedPrefSingleton.getUsername();
         ((TextView) view.findViewById(R.id.me_heading)).setText(welcome);
     }
 

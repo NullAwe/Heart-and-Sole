@@ -23,8 +23,6 @@ import com.allen.heartandsole.solely_for_you.SolelyForYouActivity;
  */
 public class HomepageActivity extends AppCompatActivity {
 
-    private LocalUserAPI userAPI;
-
     private FragmentManager fragMan;
     private int curFrag;
 
@@ -33,11 +31,12 @@ public class HomepageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
         // Initializes class fields:
-        userAPI = new LocalUserAPI(this);
+        SharedPrefSingleton.setContext(this);
         fragMan = getSupportFragmentManager();
         curFrag = -1;
         // Sets the viewed fragment:
-        onBottomBarClicked(findViewById(userAPI.hasAccount() ? R.id.walk : R.id.info));
+        onBottomBarClicked(findViewById(SharedPrefSingleton.getInstance().hasAccount() ?
+                R.id.walk : R.id.info));
         // Sets a custom toolbar:
         Toolbar toolbar = findViewById(R.id.toolbar);
         setActionBar(toolbar);
@@ -62,7 +61,7 @@ public class HomepageActivity extends AppCompatActivity {
     }
 
     private Fragment getFragment(int id) {
-        return id == 0 ? new AppInfoFragment() : new WalkFragment(userAPI);
+        return id == 0 ? new AppInfoFragment() : new WalkFragment();
     }
 
     public void goToSolelyForYou(View view) {

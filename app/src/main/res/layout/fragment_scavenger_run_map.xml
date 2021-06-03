@@ -31,4 +31,13 @@
         android:layout_margin="16dp"
         android:src="@drawable/ic_image"
         android:onClick="switchToImageFragment" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/distance"
+        android:text="Finish"
+        android:visibility="gone"
+        android:onClick="switchToDone"
+        android:id="@+id/done" />
 </RelativeLayout>

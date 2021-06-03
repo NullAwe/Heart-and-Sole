@@ -30,5 +30,6 @@ public class AppInfoFragment extends Fragment {
             params.height = view.findViewById(R.id.unique_route_feature).getHeight();
             darkener.setLayoutParams(params);
             darkener.getBackground().setAlpha(100);
-        });}
+        });
+    }
 }
