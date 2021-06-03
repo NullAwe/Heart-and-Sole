@@ -15,6 +15,7 @@ public class ScavengerRunActivity extends AppCompatActivity {
     private FragmentManager fragMan;
 
     private ScavengerRunMainFragment mainFragment;
+    private ScavengerRunImageFragment imageFragment;
     private ScavengerRunMapFragment mapFragment;
 
     @Override
@@ -30,6 +31,8 @@ public class ScavengerRunActivity extends AppCompatActivity {
         actionBar.setCustomView(R.layout.toolbar);
 
         mainFragment = new ScavengerRunMainFragment();
+        imageFragment = new ScavengerRunImageFragment(this.getResources().getString(
+                R.string.google_maps_key));
         mapFragment = new ScavengerRunMapFragment();
 
         fragMan = getSupportFragmentManager();
@@ -37,8 +40,18 @@ public class ScavengerRunActivity extends AppCompatActivity {
     }
 
     public void switchToMapFragment(View view) {
-        mapFragment.setDest(mainFragment.getDest());
+        mapFragment.setDest(imageFragment.getDest());
         fragMan.beginTransaction().replace(R.id.fragment, mapFragment).commit();
+    }
+
+    public void switchToImageFragment(View view) {
+        fragMan.beginTransaction().replace(R.id.fragment, imageFragment).commit();
+    }
+
+    public void startImageFragment(View view) {
+        imageFragment.setGetNearbyPOIs(mainFragment.getLocation(), mainFragment.getRadius(),
+                mainFragment.getType());
+        fragMan.beginTransaction().replace(R.id.fragment, imageFragment).commit();
     }
 
     public void backToHomepage(View view) {

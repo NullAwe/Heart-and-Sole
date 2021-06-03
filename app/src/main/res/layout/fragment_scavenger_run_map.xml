@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".solely_for_you.SolelyForYouActivity">
+    tools:context=".scavenger_run.ScavengerRunActivity">
     <fragment
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
@@ -23,4 +23,12 @@
         android:gravity="center"
         android:id="@+id/distance" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@id/distance"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_image"
+        android:onClick="switchToImageFragment" />
 </RelativeLayout>

@@ -4,31 +4,34 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import com.allen.heartandsole.GetDirectionsJSON;
-import com.allen.heartandsole.GetNearbyPOIs;
 import com.allen.heartandsole.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-
+import java.util.List;
 import java.util.Locale;
 
 public class ScavengerRunMainFragment extends Fragment implements OnMapReadyCallback {
@@ -39,7 +42,7 @@ public class ScavengerRunMainFragment extends Fragment implements OnMapReadyCall
 
     private GoogleMap map;
     private FusedLocationProviderClient locProv;
-    private LatLng dest;
+    private LatLng curPos;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent,
@@ -49,11 +52,11 @@ public class ScavengerRunMainFragment extends Fragment implements OnMapReadyCall
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        this.view = view;
         activity = requireActivity();
         context = requireContext();
-        this.view = view;
         SupportMapFragment mapFrag = (SupportMapFragment)
-                getChildFragmentManager().findFragmentById(R.id.rec_map);
+                getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFrag != null) mapFrag.getMapAsync(this);
         locProv = LocationServices.getFusedLocationProviderClient(context);
     }
@@ -66,46 +69,43 @@ public class ScavengerRunMainFragment extends Fragment implements OnMapReadyCall
                 .checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED) return;
         map.setMyLocationEnabled(true);
+        LocationRequest lr = LocationRequest.create().setInterval(1000).setFastestInterval(1000)
+                .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        LocationCallback lc = new LocationCallback() {
+            @Override
+            public void onLocationResult(@NonNull LocationResult lr) {}
+        };
         locProv.getLastLocation().addOnSuccessListener(activity, loc -> {
             if (loc == null) return;
-            try {
-                LatLng curPos = new LatLng(loc.getLatitude(), loc.getLongitude());
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(curPos, 15.0f));
-
-
-                GetNearbyPOIs get = new GetNearbyPOIs(getPOIUrl(curPos),
-                        context.getString(R.string.google_maps_key));
-                int ind = (int) (Math.random() * get.getImages().size());
-                Picasso.get().load(get.getImages().get(ind)).into((ImageView)
-                        view.findViewById(R.id.scav_image));
-                dest = get.getNearbyPOIs().get(ind);
-                GetDirectionsJSON dirs = new GetDirectionsJSON(getDirUrl(curPos, dest));
-                float mins = dirs.getMinutes(), mils = dirs.getMiles();
-                ((TextView) view.findViewById(R.id.walking_time)).setText(
-                        String.format(Locale.getDefault(), "Expected walking time: %.2f min",
-                                mins));
-                ((TextView) view.findViewById(R.id.walking_dist)).setText(
-                        String.format(Locale.getDefault(), "Walking dist: %.2f mi", mils));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            curPos = new LatLng(loc.getLatitude(), loc.getLongitude());
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(curPos, 15.0f));
         });
+        locProv.requestLocationUpdates(lr, lc, Looper.myLooper());
     }
 
-    public LatLng getDest() {
-        return dest;
+    public String getType() {
+        String type = "";
+        RadioGroup group = ((RadioGroup) view.findViewById(R.id.radio_type));
+        int children = group.getChildCount();
+        for (int i = 0; i < children - 1; i++) {
+            RadioButton child = (RadioButton) group.getChildAt(i);
+            if (child.isChecked()) {
+                type = child.getText().toString().toLowerCase();
+                break;
+            }
+        }
+        return type;
     }
 
-    private String getPOIUrl(LatLng location) {
-        return "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
-                location.latitude + "," + location.longitude + "&radius=1500&type=park&key=" +
-                context.getString(R.string.google_maps_key);
+    public int getRadius() {
+        return 1500;
     }
 
-    private String getDirUrl(LatLng location, LatLng dest) {
-        return "https://maps.googleapis.com/maps/api/directions/json?origin=" +
-                location.latitude + "," + location.longitude + "&destination=" +
-                dest.latitude + "," + dest.longitude + "&key=" +
-                getString(R.string.google_maps_key) + "&mode=walking";
+    public LatLng getLocation() {
+        long millis = System.currentTimeMillis();
+        while (curPos == null && millis + 5000 > System.currentTimeMillis()) {
+            Log.i("ScavengerRunMainFragment", "waiting for location");
+        }
+        return curPos;
     }
 }
