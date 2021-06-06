@@ -20,7 +20,6 @@ import com.allen.heartandsole.GetNearbyPOIs;
 import com.allen.heartandsole.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -39,7 +38,6 @@ public class ScavengerRunImageFragment extends Fragment implements OnMapReadyCal
     private Context context;
     private View view;
 
-    private GoogleMap map;
     private FusedLocationProviderClient locProv;
     private LatLng curPos, dest;
     private int ind = -1;
@@ -68,19 +66,17 @@ public class ScavengerRunImageFragment extends Fragment implements OnMapReadyCal
 
     @Override
     public void onMapReady(@NonNull GoogleMap gMap) {
-        this.map = gMap;
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED && ActivityCompat
                 .checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED) return;
-        map.setMyLocationEnabled(true);
+        gMap.setMyLocationEnabled(true);
         locProv.getLastLocation().addOnSuccessListener(activity, loc -> {
             if (loc == null) return;
             try {
                 curPos = new LatLng(loc.getLatitude(), loc.getLongitude());
 
                 if (getNearbyPOIs == null) return;
-//                GetNearbyPOIs get = new GetNearbyPOIs(getPOIUrl(curPos), apiKey);
                 if (ind == -1) ind = (int) (Math.random() * getNearbyPOIs.getImages().size());
                 Picasso.get().load(getNearbyPOIs.getImages().get(ind)).into((ImageView)
                         view.findViewById(R.id.scav_image));

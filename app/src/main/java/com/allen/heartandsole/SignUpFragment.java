@@ -11,7 +11,12 @@ import androidx.fragment.app.Fragment;
 
 public class SignUpFragment extends Fragment {
 
-    private View view;
+    private final SignUpResponseHandler handler;
+
+    public SignUpFragment(SignUpResponseHandler handler) {
+        super();
+        this.handler = handler;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent,
@@ -21,10 +26,11 @@ public class SignUpFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        this.view = view;
+        view.findViewById(R.id.sign_up_button).setOnClickListener(l ->
+                handler.onGo(((EditText) view.findViewById(R.id.username)).getText().toString()));
     }
 
-    public String getUN() {
-        return ((EditText) view.findViewById(R.id.username)).getText().toString();
+    public interface SignUpResponseHandler {
+        void onGo(String username);
     }
 }

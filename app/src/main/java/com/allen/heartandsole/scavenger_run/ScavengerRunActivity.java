@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.allen.heartandsole.R;
-import com.allen.heartandsole.solely_for_you.SolelyForYouDoneFragment;
 
 public class ScavengerRunActivity extends AppCompatActivity {
 

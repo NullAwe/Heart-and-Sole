@@ -41,7 +41,7 @@ dependencies {
     // gson
     implementation 'com.google.code.gson:gson:2.8.6'
 
-    // confetti lol
+    // confetti
     implementation 'nl.dionsegijn:konfetti:1.3.2'
 
     // picasso

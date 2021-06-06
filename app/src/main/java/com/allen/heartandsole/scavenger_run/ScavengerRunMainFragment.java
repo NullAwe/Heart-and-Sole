@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -20,6 +19,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.allen.heartandsole.R;
+import com.allen.heartandsole.SharedPrefSingleton;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -30,11 +30,11 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-
-import java.util.List;
-import java.util.Locale;
+import com.google.android.material.slider.Slider;
 
 public class ScavengerRunMainFragment extends Fragment implements OnMapReadyCallback {
+
+    private static final float[] DISTS = {0.5f, 1.0f, 1.5f, 2.0f, 2.5f, 3.0f, 4.0f, 5.0f};
 
     private Activity activity;
     private Context context;
@@ -43,6 +43,8 @@ public class ScavengerRunMainFragment extends Fragment implements OnMapReadyCall
     private GoogleMap map;
     private FusedLocationProviderClient locProv;
     private LatLng curPos;
+
+    private int sliderValue = 1;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent,
@@ -59,6 +61,47 @@ public class ScavengerRunMainFragment extends Fragment implements OnMapReadyCall
                 getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFrag != null) mapFrag.getMapAsync(this);
         locProv = LocationServices.getFusedLocationProviderClient(context);
+        RadioGroup group = ((RadioGroup) view.findViewById(R.id.dest_type));
+        String destType = SharedPrefSingleton.getInstance().getDestType();
+        int children = group.getChildCount();
+        for (int i = 0; i < children; i++) {
+            RadioButton button = (RadioButton) group.getChildAt(i);
+            if (button.getText().toString().equals(destType)) {
+                button.toggle();
+                break;
+            }
+        }
+        group.setOnCheckedChangeListener((rGroup, id) -> {
+            int c = group.getChildCount();
+            for (int i = 0; i < c; i++) {
+                RadioButton button = (RadioButton) rGroup.getChildAt(i);
+                if (button.isChecked()) {
+                    SharedPrefSingleton.getInstance().setDestType(button.getText().toString());
+                    break;
+                }
+            }
+        });
+
+        Slider distSlider = view.findViewById(R.id.dist_slider);
+        distSlider.setValue(sliderValue);
+        distSlider.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
+            @Override
+            public void onStartTrackingTouch(@NonNull Slider slider) {}
+
+            @Override
+            public void onStopTrackingTouch(@NonNull Slider slider) {
+                sliderValue = Math.round(slider.getValue());
+                String text = "Current Radius: " + getRadius(sliderValue);
+                ((TextView) view.findViewById(R.id.cur_radius)).setText(text);
+            }
+        });
+        String text = "Current Radius: " + getRadius(sliderValue);
+        ((TextView) view.findViewById(R.id.cur_radius)).setText(text);
+        distSlider.setLabelFormatter(ScavengerRunMainFragment::getRadius);
+    }
+
+    private static String getRadius(float val) {
+        return DISTS[Math.round(val)] + " mi";
     }
 
     @Override
@@ -67,7 +110,11 @@ public class ScavengerRunMainFragment extends Fragment implements OnMapReadyCall
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED && ActivityCompat
                 .checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED) return;
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 99);
+            return;
+        }
         map.setMyLocationEnabled(true);
         LocationRequest lr = LocationRequest.create().setInterval(1000).setFastestInterval(1000)
                 .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
@@ -85,20 +132,21 @@ public class ScavengerRunMainFragment extends Fragment implements OnMapReadyCall
 
     public String getType() {
         String type = "";
-        RadioGroup group = ((RadioGroup) view.findViewById(R.id.radio_type));
+        RadioGroup group = ((RadioGroup) view.findViewById(R.id.dest_type));
         int children = group.getChildCount();
         for (int i = 0; i < children - 1; i++) {
             RadioButton child = (RadioButton) group.getChildAt(i);
             if (child.isChecked()) {
-                type = child.getText().toString().toLowerCase();
+                type = child.getText().toString();
+                SharedPrefSingleton.getInstance().setDestType(type);
                 break;
             }
         }
-        return type;
+        return type.toLowerCase();
     }
 
     public int getRadius() {
-        return 1500;
+        return (int) (DISTS[sliderValue] * 1609);
     }
 
     public LatLng getLocation() {

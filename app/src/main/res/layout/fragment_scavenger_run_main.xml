@@ -6,56 +6,102 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".scavenger_run.ScavengerRunActivity">
-
-    <fragment
-        class="com.google.android.gms.maps.SupportMapFragment"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:id="@+id/map" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/map"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:text="Customize"
-        android:textColor="@color/colorPrimary"
-        android:textSize="25sp"
-        android:gravity="center"
-        android:id="@+id/customize" />
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/customize"
-        android:padding="10dp"
-        android:orientation="vertical"
-        android:id="@+id/radio_type">
-        <RadioButton
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/colorPrimary"
-            android:text="Park" />
+            android:paddingBottom="30dp"
+            android:orientation="vertical">
+            <fragment
+                class="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:id="@+id/map" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/colorPrimary"
-            android:text="School" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:text="Customize"
+                android:textColor="@color/colorPrimary"
+                android:textSize="25sp"
+                android:gravity="center" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/colorPrimary"
-            android:text="Library" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="Change Destination Type"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/colorPrimary"
-            android:text="All" />
-    </RadioGroup>
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:orientation="vertical"
+                android:id="@+id/dest_type">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimary"
+                    android:text="Park" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimary"
+                    android:text="School" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimary"
+                    android:text="Library" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimary"
+                    android:text="All" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="Change Radius"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp" />
+
+            <com.google.android.material.slider.Slider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:valueFrom="0.0"
+                android:valueTo="7.0"
+                android:stepSize="1.0"
+                android:id="@+id/dist_slider" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Current Radius: 1 mi"
+                android:textSize="15sp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:id="@+id/cur_radius" />
+        </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"

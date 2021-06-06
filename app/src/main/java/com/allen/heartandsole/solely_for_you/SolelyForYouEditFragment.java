@@ -121,7 +121,7 @@ public class SolelyForYouEditFragment extends Fragment implements OnMapReadyCall
             return;
         }
         try {
-            double dist = 0.1 * minutes / def.getMinutes() / 5;
+            double dist = 0.1 * minutes / def.getMinutes() / 4;
             LatLng p1 = getPoint(origin, angle, dist);
             List<LatLng> points = new GetDirectionsJSON(getLink(origin, p1)).getDirections();
             routes.put(minutes, points);
