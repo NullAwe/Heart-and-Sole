@@ -91,11 +91,11 @@ public class ScavengerRunMainFragment extends Fragment implements OnMapReadyCall
             @Override
             public void onStopTrackingTouch(@NonNull Slider slider) {
                 sliderValue = Math.round(slider.getValue());
-                String text = "Current Radius: " + getRadius(sliderValue);
+                String text = "Current Distance: " + getRadius(sliderValue);
                 ((TextView) view.findViewById(R.id.cur_radius)).setText(text);
             }
         });
-        String text = "Current Radius: " + getRadius(sliderValue);
+        String text = "Current Distance: " + getRadius(sliderValue);
         ((TextView) view.findViewById(R.id.cur_radius)).setText(text);
         distSlider.setLabelFormatter(ScavengerRunMainFragment::getRadius);
     }

@@ -74,13 +74,13 @@ public class RedHotChiliSteppersActivity extends AppCompatActivity {
 
     public void play(View view) {
         player.start();
-        view.setVisibility(View.GONE);
+        findViewById(R.id.play).setVisibility(View.GONE);
         findViewById(R.id.pause).setVisibility(View.VISIBLE);
     }
 
     public void pause(View view) {
         player.pause();
-        view.setVisibility(View.GONE);
+        findViewById(R.id.pause).setVisibility(View.GONE);
         findViewById(R.id.play).setVisibility(View.VISIBLE);
     }
 
@@ -95,6 +95,7 @@ public class RedHotChiliSteppersActivity extends AppCompatActivity {
         }
         player.start();
         updateSongDescription();
+        if (findViewById(R.id.pause).getVisibility() == View.GONE) pause(null);
     }
 
     private void updateSongDescription() {

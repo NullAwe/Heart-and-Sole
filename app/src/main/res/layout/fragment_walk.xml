@@ -8,12 +8,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:padding="10dp"
         android:text="Welcome"
         android:textSize="25sp"
         android:textColor="@color/colorPrimary"
-        android:textStyle="bold"
         android:gravity="center"
         android:id="@+id/me_heading" />
 
@@ -54,6 +53,19 @@
                     android:padding="0dp"
                     android:src="@drawable/holy_walkamolie"
                     android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"
+                    android:background="@android:color/transparent"
+                    android:elevation="1dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_below="@id/holy_walkamolie_heading"
+                    android:padding="0dp"
+                    android:src="@drawable/coming_soon"
+                    android:alpha="0.5"
+                    android:scaleType="centerInside"
                     android:adjustViewBounds="true"
                     android:background="@android:color/transparent"
                     android:elevation="1dp" />
@@ -183,6 +195,19 @@
                     android:adjustViewBounds="true"
                     android:background="@android:color/transparent"
                     android:elevation="1dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_below="@id/sole_mate_heading"
+                    android:padding="0dp"
+                    android:src="@drawable/coming_soon"
+                    android:alpha="0.5"
+                    android:scaleType="centerInside"
+                    android:adjustViewBounds="true"
+                    android:background="@android:color/transparent"
+                    android:elevation="1dp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -209,6 +234,19 @@
                     android:padding="0dp"
                     android:src="@drawable/been_there_run_that"
                     android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"
+                    android:background="@android:color/transparent"
+                    android:elevation="1dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_below="@id/been_there_run_that_heading"
+                    android:padding="0dp"
+                    android:src="@drawable/coming_soon"
+                    android:alpha="0.5"
+                    android:scaleType="centerInside"
                     android:adjustViewBounds="true"
                     android:background="@android:color/transparent"
                     android:elevation="1dp" />

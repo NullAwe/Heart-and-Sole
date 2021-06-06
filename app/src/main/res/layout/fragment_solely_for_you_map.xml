@@ -19,7 +19,7 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
         android:onClick="switchToDone"
-        android:text="I'm Done"
+        android:text="Finish"
         android:visibility="gone"
         android:id="@+id/done" />
 </RelativeLayout>
