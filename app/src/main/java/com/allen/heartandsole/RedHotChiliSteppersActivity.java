@@ -43,11 +43,11 @@ public class RedHotChiliSteppersActivity extends AppCompatActivity {
                     songArtist = songDesc[1].split("_");
             StringBuilder name = new StringBuilder(), artist = new StringBuilder();
             for (int i = 0; i < songName.length; i++) {
-                name.append(songName[i]);
+                name.append(capitalize(songName[i]));
                 if (i < songName.length - 1) name.append(" ");
             }
             for (int i = 0; i < songArtist.length; i++) {
-                artist.append(songArtist[i]);
+                artist.append(capitalize(songArtist[i]));
                 if (i < songArtist.length - 1) artist.append(" ");
             }
             try {
@@ -102,6 +102,12 @@ public class RedHotChiliSteppersActivity extends AppCompatActivity {
         String text = "Now Playing:\n" + playlist.get(index).song + " by " +
                 playlist.get(index).artist;
         songDescription.setText(text);
+    }
+
+    private static String capitalize(String word) {
+        if (word.length() == 0) return word;
+        if (word.length() == 1) return Character.toString(Character.toUpperCase(word.charAt(0)));
+        return Character.toUpperCase(word.charAt(0)) + word.substring(1);
     }
 
     private static class Song {

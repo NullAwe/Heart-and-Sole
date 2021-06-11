@@ -19,7 +19,6 @@
                 android:text="Find This Place:"
                 android:textSize="25sp"
                 android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
                 android:gravity="center"
                 android:id="@+id/rec_heading" />
 
