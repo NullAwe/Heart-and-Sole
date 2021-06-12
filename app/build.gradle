@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def googleMapApiKey = properties.getProperty('google.map.key').toString()
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
@@ -16,7 +20,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            resValue "string", "google_maps_key", "\"$googleMapApiKey\""
+        }
         release {
+            resValue "string", "google_maps_key", "\"$googleMapApiKey\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
