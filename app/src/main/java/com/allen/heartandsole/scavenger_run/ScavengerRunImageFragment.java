@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.json.JSONException;
 
@@ -50,6 +53,9 @@ public class ScavengerRunImageFragment extends Fragment implements OnMapReadyCal
     private String url;
     private boolean changed = true;
     private GetNearbyPOIs getNearbyPOIs;
+
+    private float mins = -1, mils = -1;
+    private Bitmap bitmap = null;
 
     public ScavengerRunImageFragment(String apiKey) {
         this.apiKey = apiKey;
@@ -91,31 +97,52 @@ public class ScavengerRunImageFragment extends Fragment implements OnMapReadyCal
                 if (getNearbyPOIs == null) return;
                 if (ind == -1) ind = (int) (Math.random() * getNearbyPOIs.getImages().size());
                 if (getNearbyPOIs.getImages().size() == 0) return;
-                OkHttpClient client = new OkHttpClient.Builder()
-                        .addInterceptor(chain -> {
-                            Request newRequest = chain.request().newBuilder()
-                                    .addHeader("X-Android-Package", context.getPackageName())
-                                    .addHeader("X-Android-Cert",
-                                            Objects.requireNonNull(APIRequestHelper
-                                                    .getSignature(context.getPackageManager(),
-                                                            context.getPackageName())))
-                                    .build();
-                            return chain.proceed(newRequest);
-                        })
-                        .build();
-                Picasso picasso = new Picasso.Builder(context)
-                        .downloader(new OkHttp3Downloader(client))
-                        .build();
-                picasso.load(getNearbyPOIs.getImages().get(ind)).into((ImageView)
-                        view.findViewById(R.id.scav_image));
+                ImageView scavImage = view.findViewById(R.id.scav_image);
+                if (bitmap == null) {
+                    OkHttpClient client = new OkHttpClient.Builder()
+                            .addInterceptor(chain -> {
+                                Request newRequest = chain.request().newBuilder()
+                                        .addHeader("X-Android-Package", context.getPackageName())
+                                        .addHeader("X-Android-Cert",
+                                                Objects.requireNonNull(APIRequestHelper
+                                                        .getSignature(context.getPackageManager(),
+                                                                context.getPackageName())))
+                                        .build();
+                                return chain.proceed(newRequest);
+                            })
+                            .build();
+                    Target target = new Target() {
+                        @Override
+                        public void onBitmapLoaded(Bitmap bm, Picasso.LoadedFrom from) {
+                            bitmap = bm;
+                            scavImage.setImageBitmap(bm);
+                        }
+
+                        @Override
+                        public void onBitmapFailed(Exception e, Drawable errorDrawable) {}
+
+                        @Override
+                        public void onPrepareLoad(Drawable placeHolderDrawable) {}
+                    };
+                    Picasso picasso = new Picasso.Builder(context)
+                            .downloader(new OkHttp3Downloader(client))
+                            .build();
+                    picasso.load(getNearbyPOIs.getImages().get(ind)).into(target);
+                } else {
+                    scavImage.setImageBitmap(bitmap);
+                }
                 dest = getNearbyPOIs.getNearbyPOIs().get(ind);
-                GetDirectionsJSON dirs = new GetDirectionsJSON(getDirUrl(curPos, dest), context);
-                float mins = dirs.getMinutes(), mils = dirs.getMiles();
+                if (mins < 0 || mils < 0) {
+                    GetDirectionsJSON dirs = new GetDirectionsJSON(getDirUrl(curPos, dest), context);
+                    mins = dirs.getMinutes();
+                    mils = dirs.getMiles();
+                }
                 ((TextView) view.findViewById(R.id.walking_time)).setText(
-                        String.format(Locale.getDefault(), "Expected walking time: %.2f min",
-                                mins));
+                        String.format(Locale.getDefault(), "Expected walking time " +
+                                        "(from source): %.2f min", mins));
                 ((TextView) view.findViewById(R.id.walking_dist)).setText(
-                        String.format(Locale.getDefault(), "Walking dist: %.2f mi", mils));
+                        String.format(Locale.getDefault(), "Walking dist (from source): " +
+                                        "%.2f mi", mils));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
