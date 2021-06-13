@@ -1,5 +1,6 @@
 package com.allen.heartandsole;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -16,8 +17,8 @@ public class GetNearbyPOIs {
     private final List<LatLng> places;
     private final List<String> images;
 
-    public GetNearbyPOIs(String url, String apiKey) throws JSONException {
-        JSONObject json = new GetJSONRunner().executeAsync(() -> url);
+    public GetNearbyPOIs(String url, String apiKey, Context context) throws JSONException {
+        JSONObject json = new GetJSONRunner().executeAsync(() -> url, context);
         places = new ArrayList<>();
         images = new ArrayList<>();
         if (json != null) {

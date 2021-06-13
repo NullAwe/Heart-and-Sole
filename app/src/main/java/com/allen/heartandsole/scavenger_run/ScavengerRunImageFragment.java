@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.allen.heartandsole.APIRequestHelper;
 import com.allen.heartandsole.GetDirectionsJSON;
 import com.allen.heartandsole.GetNearbyPOIs;
 import com.allen.heartandsole.R;
@@ -24,11 +25,16 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 
 import java.util.Locale;
+import java.util.Objects;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 public class ScavengerRunImageFragment extends Fragment implements OnMapReadyCallback {
 
@@ -41,6 +47,8 @@ public class ScavengerRunImageFragment extends Fragment implements OnMapReadyCal
     private FusedLocationProviderClient locProv;
     private LatLng curPos, dest;
     private int ind = -1;
+    private String url;
+    private boolean changed = true;
     private GetNearbyPOIs getNearbyPOIs;
 
     public ScavengerRunImageFragment(String apiKey) {
@@ -75,13 +83,33 @@ public class ScavengerRunImageFragment extends Fragment implements OnMapReadyCal
             if (loc == null) return;
             try {
                 curPos = new LatLng(loc.getLatitude(), loc.getLongitude());
-
+                if (url == null) return;
+                if (changed) {
+                    changed = false;
+                    getNearbyPOIs = new GetNearbyPOIs(url, apiKey, context);
+                }
                 if (getNearbyPOIs == null) return;
                 if (ind == -1) ind = (int) (Math.random() * getNearbyPOIs.getImages().size());
-                Picasso.get().load(getNearbyPOIs.getImages().get(ind)).into((ImageView)
+                if (getNearbyPOIs.getImages().size() == 0) return;
+                OkHttpClient client = new OkHttpClient.Builder()
+                        .addInterceptor(chain -> {
+                            Request newRequest = chain.request().newBuilder()
+                                    .addHeader("X-Android-Package", context.getPackageName())
+                                    .addHeader("X-Android-Cert",
+                                            Objects.requireNonNull(APIRequestHelper
+                                                    .getSignature(context.getPackageManager(),
+                                                            context.getPackageName())))
+                                    .build();
+                            return chain.proceed(newRequest);
+                        })
+                        .build();
+                Picasso picasso = new Picasso.Builder(context)
+                        .downloader(new OkHttp3Downloader(client))
+                        .build();
+                picasso.load(getNearbyPOIs.getImages().get(ind)).into((ImageView)
                         view.findViewById(R.id.scav_image));
                 dest = getNearbyPOIs.getNearbyPOIs().get(ind);
-                GetDirectionsJSON dirs = new GetDirectionsJSON(getDirUrl(curPos, dest));
+                GetDirectionsJSON dirs = new GetDirectionsJSON(getDirUrl(curPos, dest), context);
                 float mins = dirs.getMinutes(), mils = dirs.getMiles();
                 ((TextView) view.findViewById(R.id.walking_time)).setText(
                         String.format(Locale.getDefault(), "Expected walking time: %.2f min",
@@ -100,18 +128,11 @@ public class ScavengerRunImageFragment extends Fragment implements OnMapReadyCal
 
     public void setGetNearbyPOIs(LatLng location, int radiusMeters, String type) {
         if (type == null || type.length() == 0) {
-            try {
-                getNearbyPOIs = new GetNearbyPOIs(getPOIUrl(location, radiusMeters), apiKey);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            url = getPOIUrl(location, radiusMeters);
         } else {
-            try {
-                getNearbyPOIs = new GetNearbyPOIs(getPOIUrl(location, radiusMeters, type), apiKey);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            url = getPOIUrl(location, radiusMeters, type);
         }
+        changed = true;
     }
 
     private String getPOIUrl(LatLng location, int radius) {

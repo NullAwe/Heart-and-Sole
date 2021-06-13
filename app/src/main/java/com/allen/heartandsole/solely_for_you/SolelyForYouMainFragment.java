@@ -99,11 +99,11 @@ public class SolelyForYouMainFragment extends Fragment implements OnMapReadyCall
             angle = Math.random() * 2 * Math.PI;
             LatLng p1 = getPoint(curPos, angle, dist);
             try {
-                def = new GetDirectionsJSON(getLink(curPos, p1));
+                def = new GetDirectionsJSON(getLink(curPos, p1), context);
                 long millis = System.currentTimeMillis();
-                while (millis + 200 > System.currentTimeMillis())
+                while (millis + 5000 > System.currentTimeMillis() && def.getMinutes() < 0.1)
                     Log.i("SolelyForYouMainFragment", String.format("waiting for directions API, " +
-                            "%d milliseconds left", 200 - (System.currentTimeMillis() - millis)));
+                            "%d milliseconds left", 5000 - (System.currentTimeMillis() - millis)));
                 changeRouteTo30();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -154,7 +154,7 @@ public class SolelyForYouMainFragment extends Fragment implements OnMapReadyCall
         try {
             double dist = 0.007 * 30 / def.getMinutes();
             LatLng p1 = getPoint(curPos, angle, dist);
-            List<LatLng> points = new GetDirectionsJSON(getLink(curPos, p1)).getDirections();
+            List<LatLng> points = new GetDirectionsJSON(getLink(curPos, p1), context).getDirections();
             routes.put(30, points);
             PolylineOptions options = new PolylineOptions();
             for (LatLng point : points) options.add(point);

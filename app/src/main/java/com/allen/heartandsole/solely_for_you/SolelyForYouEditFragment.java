@@ -123,7 +123,7 @@ public class SolelyForYouEditFragment extends Fragment implements OnMapReadyCall
         try {
             double dist = 0.007 * minutes / def.getMinutes();
             LatLng p1 = getPoint(origin, angle, dist);
-            List<LatLng> points = new GetDirectionsJSON(getLink(origin, p1)).getDirections();
+            List<LatLng> points = new GetDirectionsJSON(getLink(origin, p1), context).getDirections();
             routes.put(minutes, points);
             PolylineOptions options = new PolylineOptions();
             for (LatLng point : points) options.add(point);

@@ -25,6 +25,8 @@ public class WalkFragment extends Fragment {
         resizeRelativeLayouts(view);
     }
 
+
+
     private void resizeRelativeLayouts(View view) {
         LinearLayout navButtons = view.findViewById(R.id.nav_buttons);
         int numChildren = navButtons.getChildCount();

@@ -1,5 +1,6 @@
 package com.allen.heartandsole;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Callable;
@@ -21,11 +23,11 @@ public class GetJSONRunner {
 
     private final Executor executor = Executors.newSingleThreadExecutor();
 
-    public JSONObject executeAsync(Callable<String> callable) {
+    public JSONObject executeAsync(Callable<String> callable, Context context) {
         final AtomicReference<JSONObject> json = new AtomicReference<>();
         executor.execute(() -> {
             try {
-                json.set(readJsonFromUrl(callable.call()));
+                json.set(readJsonFromUrl(callable.call(), context));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -37,8 +39,15 @@ public class GetJSONRunner {
         return json.get();
     }
 
-    private static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
-        try (InputStream is = new URL(url).openStream()) {
+    private static JSONObject readJsonFromUrl(String url, Context context) throws IOException,
+                                                                         JSONException {
+        HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+        con.setRequestProperty("X-Android-Package", context.getPackageName());
+        con.setRequestProperty("X-Android-Cert",
+                APIRequestHelper.getSignature(context.getPackageManager(),
+                        context.getPackageName()));
+
+        try (InputStream is = con.getInputStream()) {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             String jsonText = readAll(rd);
             return new JSONObject(jsonText);
