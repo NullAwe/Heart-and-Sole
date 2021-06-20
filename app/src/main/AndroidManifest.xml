@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.allen.heartandsole">
+    package="com.highdefinition.heartandsole">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,7 +19,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".HomepageActivity"
+            android:name="com.highdefinition.heartandsole.HomepageActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,16 +29,16 @@
         </activity>
 
         <activity
-            android:name=".RedHotChiliSteppersActivity"
+            android:name="com.highdefinition.heartandsole.RedHotChiliSteppersActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".solely_for_you.SolelyForYouActivity"
+            android:name="com.highdefinition.heartandsole.solely_for_you.SolelyForYouActivity"
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".scavenger_run.ScavengerRunActivity"
+            android:name="com.highdefinition.heartandsole.scavenger_run.ScavengerRunActivity"
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait" />
     </application>

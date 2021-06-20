@@ -18,7 +18,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
-        android:onClick="switchToDone"
+        android:onClick="switchToDoneFragment"
         android:text="Finish"
         android:visibility="gone"
         android:id="@+id/done" />
