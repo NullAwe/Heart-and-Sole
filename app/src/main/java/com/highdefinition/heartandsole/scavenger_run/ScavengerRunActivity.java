@@ -38,6 +38,7 @@ public class ScavengerRunActivity extends AppCompatActivity {
         // Initializes class fields:
         fragMan = getSupportFragmentManager();
         mainFragment = new ScavengerRunMainFragment();
+
         imageFragment = new ScavengerRunImageFragment(this.getResources().getString(
                 R.string.google_maps_key)); // Error here because of Android Studio v4.1+ bug not
         // being able to recognize resource values created in build.gradle. Safe to ignore.
